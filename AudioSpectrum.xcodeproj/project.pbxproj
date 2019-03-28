@@ -1,0 +1,601 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3C5F3BFC224B96D4009F9881 /* RealtimeAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5F3BFB224B96D4009F9881 /* RealtimeAnalyzer.m */; };
+		3C5F3BFF224C6DEE009F9881 /* SpectrumView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5F3BFE224C6DEE009F9881 /* SpectrumView.m */; };
+		3CECB94F224C86D000470BFF /* 01.Halcyon - Runaway (Feat. Valentina Franco) (Heuse Remix).mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3CECB94E224C86D000470BFF /* 01.Halcyon - Runaway (Feat. Valentina Franco) (Heuse Remix).mp3 */; };
+		A41DD175224B1AFD00915596 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A41DD174224B1AFD00915596 /* AppDelegate.m */; };
+		A41DD178224B1AFD00915596 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A41DD177224B1AFD00915596 /* ViewController.m */; };
+		A41DD17B224B1AFD00915596 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A41DD179224B1AFD00915596 /* Main.storyboard */; };
+		A41DD17D224B1B0000915596 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A41DD17C224B1B0000915596 /* Assets.xcassets */; };
+		A41DD180224B1B0000915596 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A41DD17E224B1B0000915596 /* LaunchScreen.storyboard */; };
+		A41DD183224B1B0000915596 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A41DD182224B1B0000915596 /* main.m */; };
+		A41DD18D224B1B0100915596 /* AudioSpectrumTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A41DD18C224B1B0100915596 /* AudioSpectrumTests.m */; };
+		A41DD198224B1B0100915596 /* AudioSpectrumUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A41DD197224B1B0100915596 /* AudioSpectrumUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A41DD189224B1B0100915596 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A41DD168224B1AFD00915596 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A41DD16F224B1AFD00915596;
+			remoteInfo = AudioSpectrum;
+		};
+		A41DD194224B1B0100915596 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A41DD168224B1AFD00915596 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A41DD16F224B1AFD00915596;
+			remoteInfo = AudioSpectrum;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3C5F3BFA224B96D4009F9881 /* RealtimeAnalyzer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RealtimeAnalyzer.h; sourceTree = "<group>"; };
+		3C5F3BFB224B96D4009F9881 /* RealtimeAnalyzer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RealtimeAnalyzer.m; sourceTree = "<group>"; };
+		3C5F3BFD224C6DEE009F9881 /* SpectrumView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpectrumView.h; sourceTree = "<group>"; };
+		3C5F3BFE224C6DEE009F9881 /* SpectrumView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpectrumView.m; sourceTree = "<group>"; };
+		3CECB94E224C86D000470BFF /* 01.Halcyon - Runaway (Feat. Valentina Franco) (Heuse Remix).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "01.Halcyon - Runaway (Feat. Valentina Franco) (Heuse Remix).mp3"; sourceTree = "<group>"; };
+		A41DD170224B1AFD00915596 /* AudioSpectrum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioSpectrum.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A41DD173224B1AFD00915596 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A41DD174224B1AFD00915596 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A41DD176224B1AFD00915596 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		A41DD177224B1AFD00915596 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		A41DD17A224B1AFD00915596 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A41DD17C224B1B0000915596 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A41DD17F224B1B0000915596 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A41DD181224B1B0000915596 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A41DD182224B1B0000915596 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A41DD188224B1B0100915596 /* AudioSpectrumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioSpectrumTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A41DD18C224B1B0100915596 /* AudioSpectrumTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioSpectrumTests.m; sourceTree = "<group>"; };
+		A41DD18E224B1B0100915596 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A41DD193224B1B0100915596 /* AudioSpectrumUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioSpectrumUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A41DD197224B1B0100915596 /* AudioSpectrumUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioSpectrumUITests.m; sourceTree = "<group>"; };
+		A41DD199224B1B0100915596 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A41DD16D224B1AFD00915596 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A41DD185224B1B0100915596 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A41DD190224B1B0100915596 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A41DD167224B1AFD00915596 = {
+			isa = PBXGroup;
+			children = (
+				A41DD172224B1AFD00915596 /* AudioSpectrum */,
+				A41DD18B224B1B0100915596 /* AudioSpectrumTests */,
+				A41DD196224B1B0100915596 /* AudioSpectrumUITests */,
+				A41DD171224B1AFD00915596 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A41DD171224B1AFD00915596 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A41DD170224B1AFD00915596 /* AudioSpectrum.app */,
+				A41DD188224B1B0100915596 /* AudioSpectrumTests.xctest */,
+				A41DD193224B1B0100915596 /* AudioSpectrumUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A41DD172224B1AFD00915596 /* AudioSpectrum */ = {
+			isa = PBXGroup;
+			children = (
+				3CECB94E224C86D000470BFF /* 01.Halcyon - Runaway (Feat. Valentina Franco) (Heuse Remix).mp3 */,
+				A41DD173224B1AFD00915596 /* AppDelegate.h */,
+				A41DD174224B1AFD00915596 /* AppDelegate.m */,
+				A41DD176224B1AFD00915596 /* ViewController.h */,
+				A41DD177224B1AFD00915596 /* ViewController.m */,
+				A41DD179224B1AFD00915596 /* Main.storyboard */,
+				A41DD17C224B1B0000915596 /* Assets.xcassets */,
+				A41DD17E224B1B0000915596 /* LaunchScreen.storyboard */,
+				A41DD181224B1B0000915596 /* Info.plist */,
+				A41DD182224B1B0000915596 /* main.m */,
+				3C5F3BFA224B96D4009F9881 /* RealtimeAnalyzer.h */,
+				3C5F3BFB224B96D4009F9881 /* RealtimeAnalyzer.m */,
+				3C5F3BFD224C6DEE009F9881 /* SpectrumView.h */,
+				3C5F3BFE224C6DEE009F9881 /* SpectrumView.m */,
+			);
+			path = AudioSpectrum;
+			sourceTree = "<group>";
+		};
+		A41DD18B224B1B0100915596 /* AudioSpectrumTests */ = {
+			isa = PBXGroup;
+			children = (
+				A41DD18C224B1B0100915596 /* AudioSpectrumTests.m */,
+				A41DD18E224B1B0100915596 /* Info.plist */,
+			);
+			path = AudioSpectrumTests;
+			sourceTree = "<group>";
+		};
+		A41DD196224B1B0100915596 /* AudioSpectrumUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A41DD197224B1B0100915596 /* AudioSpectrumUITests.m */,
+				A41DD199224B1B0100915596 /* Info.plist */,
+			);
+			path = AudioSpectrumUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A41DD16F224B1AFD00915596 /* AudioSpectrum */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A41DD19C224B1B0100915596 /* Build configuration list for PBXNativeTarget "AudioSpectrum" */;
+			buildPhases = (
+				A41DD16C224B1AFD00915596 /* Sources */,
+				A41DD16D224B1AFD00915596 /* Frameworks */,
+				A41DD16E224B1AFD00915596 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AudioSpectrum;
+			productName = AudioSpectrum;
+			productReference = A41DD170224B1AFD00915596 /* AudioSpectrum.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A41DD187224B1B0100915596 /* AudioSpectrumTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A41DD19F224B1B0100915596 /* Build configuration list for PBXNativeTarget "AudioSpectrumTests" */;
+			buildPhases = (
+				A41DD184224B1B0100915596 /* Sources */,
+				A41DD185224B1B0100915596 /* Frameworks */,
+				A41DD186224B1B0100915596 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A41DD18A224B1B0100915596 /* PBXTargetDependency */,
+			);
+			name = AudioSpectrumTests;
+			productName = AudioSpectrumTests;
+			productReference = A41DD188224B1B0100915596 /* AudioSpectrumTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A41DD192224B1B0100915596 /* AudioSpectrumUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A41DD1A2224B1B0100915596 /* Build configuration list for PBXNativeTarget "AudioSpectrumUITests" */;
+			buildPhases = (
+				A41DD18F224B1B0100915596 /* Sources */,
+				A41DD190224B1B0100915596 /* Frameworks */,
+				A41DD191224B1B0100915596 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A41DD195224B1B0100915596 /* PBXTargetDependency */,
+			);
+			name = AudioSpectrumUITests;
+			productName = AudioSpectrumUITests;
+			productReference = A41DD193224B1B0100915596 /* AudioSpectrumUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A41DD168224B1AFD00915596 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = taihe;
+				TargetAttributes = {
+					A41DD16F224B1AFD00915596 = {
+						CreatedOnToolsVersion = 10.2;
+					};
+					A41DD187224B1B0100915596 = {
+						CreatedOnToolsVersion = 10.2;
+						TestTargetID = A41DD16F224B1AFD00915596;
+					};
+					A41DD192224B1B0100915596 = {
+						CreatedOnToolsVersion = 10.2;
+						TestTargetID = A41DD16F224B1AFD00915596;
+					};
+				};
+			};
+			buildConfigurationList = A41DD16B224B1AFD00915596 /* Build configuration list for PBXProject "AudioSpectrum" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A41DD167224B1AFD00915596;
+			productRefGroup = A41DD171224B1AFD00915596 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A41DD16F224B1AFD00915596 /* AudioSpectrum */,
+				A41DD187224B1B0100915596 /* AudioSpectrumTests */,
+				A41DD192224B1B0100915596 /* AudioSpectrumUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A41DD16E224B1AFD00915596 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A41DD180224B1B0000915596 /* LaunchScreen.storyboard in Resources */,
+				A41DD17D224B1B0000915596 /* Assets.xcassets in Resources */,
+				3CECB94F224C86D000470BFF /* 01.Halcyon - Runaway (Feat. Valentina Franco) (Heuse Remix).mp3 in Resources */,
+				A41DD17B224B1AFD00915596 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A41DD186224B1B0100915596 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A41DD191224B1B0100915596 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A41DD16C224B1AFD00915596 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C5F3BFF224C6DEE009F9881 /* SpectrumView.m in Sources */,
+				A41DD178224B1AFD00915596 /* ViewController.m in Sources */,
+				A41DD183224B1B0000915596 /* main.m in Sources */,
+				3C5F3BFC224B96D4009F9881 /* RealtimeAnalyzer.m in Sources */,
+				A41DD175224B1AFD00915596 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A41DD184224B1B0100915596 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A41DD18D224B1B0100915596 /* AudioSpectrumTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A41DD18F224B1B0100915596 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A41DD198224B1B0100915596 /* AudioSpectrumUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A41DD18A224B1B0100915596 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A41DD16F224B1AFD00915596 /* AudioSpectrum */;
+			targetProxy = A41DD189224B1B0100915596 /* PBXContainerItemProxy */;
+		};
+		A41DD195224B1B0100915596 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A41DD16F224B1AFD00915596 /* AudioSpectrum */;
+			targetProxy = A41DD194224B1B0100915596 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A41DD179224B1AFD00915596 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A41DD17A224B1AFD00915596 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A41DD17E224B1B0000915596 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A41DD17F224B1B0000915596 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A41DD19A224B1B0100915596 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		A41DD19B224B1B0100915596 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A41DD19D224B1B0100915596 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 87Q8YX4GE8;
+				INFOPLIST_FILE = AudioSpectrum/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.taihe.test.AudioSpectrum;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "通用测试DEV";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A41DD19E224B1B0100915596 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 87Q8YX4GE8;
+				INFOPLIST_FILE = AudioSpectrum/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.taihe.test.AudioSpectrum;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "通用测试ADHOC";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A41DD1A0224B1B0100915596 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = AudioSpectrumTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.taihe.test.AudioSpectrumTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AudioSpectrum.app/AudioSpectrum";
+			};
+			name = Debug;
+		};
+		A41DD1A1224B1B0100915596 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = AudioSpectrumTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.taihe.test.AudioSpectrumTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AudioSpectrum.app/AudioSpectrum";
+			};
+			name = Release;
+		};
+		A41DD1A3224B1B0100915596 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = AudioSpectrumUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.taihe.test.AudioSpectrumUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AudioSpectrum;
+			};
+			name = Debug;
+		};
+		A41DD1A4224B1B0100915596 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = AudioSpectrumUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.taihe.test.AudioSpectrumUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AudioSpectrum;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A41DD16B224B1AFD00915596 /* Build configuration list for PBXProject "AudioSpectrum" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A41DD19A224B1B0100915596 /* Debug */,
+				A41DD19B224B1B0100915596 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A41DD19C224B1B0100915596 /* Build configuration list for PBXNativeTarget "AudioSpectrum" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A41DD19D224B1B0100915596 /* Debug */,
+				A41DD19E224B1B0100915596 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A41DD19F224B1B0100915596 /* Build configuration list for PBXNativeTarget "AudioSpectrumTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A41DD1A0224B1B0100915596 /* Debug */,
+				A41DD1A1224B1B0100915596 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A41DD1A2224B1B0100915596 /* Build configuration list for PBXNativeTarget "AudioSpectrumUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A41DD1A3224B1B0100915596 /* Debug */,
+				A41DD1A4224B1B0100915596 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A41DD168224B1AFD00915596 /* Project object */;
+}
