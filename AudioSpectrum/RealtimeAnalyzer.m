@@ -209,7 +209,8 @@ static float const kEndFrequency = 18000.0;
         int count = self.fftSize / 2;
         NSMutableArray<NSNumber *> *arry = [NSMutableArray<NSNumber *> array];
         for (NSUInteger c = 0; c < count; c++) {
-            [arry addObject: [NSNumber numberWithFloat:channelAmplitudes[c]]];
+            float val = channelAmplitudes[c];
+            [arry addObject: [NSNumber numberWithFloat:val]];
         }
         [amplitudes addObject:arry.copy];
     }
@@ -241,8 +242,14 @@ static float const kEndFrequency = 18000.0;
         spectrum = [self highlightWaveform:spectrum];
         
         for (int t = 0; t < kFrequencyBands; t++) {
-            float result = self.spectrumBuffer[i][t].floatValue * self.spectrumSmooth + spectrum[t].floatValue * (1.0 - self.spectrumSmooth);
-            self.spectrumBuffer[i][t] = [NSNumber numberWithFloat:result];
+            float oldVal = self.spectrumBuffer[i][t].floatValue;
+            oldVal = isnan(oldVal) ? 0 : oldVal;
+            
+            float newVal = spectrum[t].floatValue;
+            newVal = isnan(newVal) ? 0 : newVal;
+            
+            float result = oldVal * self.spectrumSmooth + newVal * (1.0 - self.spectrumSmooth);
+            self.spectrumBuffer[i][t] = [NSNumber numberWithFloat:(isnan(result) ? 0 : result)];
         }
     }
     return self.spectrumBuffer.copy;

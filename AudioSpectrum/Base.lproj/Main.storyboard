@@ -17,7 +17,21 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="au2-5j-rlo" customClass="SpectrumView">
+                                <rect key="frame" x="0.0" y="88" width="414" height="150"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="b8P-Kz-P1A"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="au2-5j-rlo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="IuI-pR-r6n"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="au2-5j-rlo" secondAttribute="trailing" id="cmC-wu-XT3"/>
+                            <constraint firstItem="au2-5j-rlo" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="isv-eA-Xtf"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="zZh-81-BiX">
@@ -29,6 +43,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="playItem" destination="mcW-fz-ccR" id="2ij-WI-A4J"/>
+                        <outlet property="spectrumView" destination="au2-5j-rlo" id="pGS-As-HD1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

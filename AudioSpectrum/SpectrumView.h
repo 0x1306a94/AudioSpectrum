@@ -25,6 +25,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SpectrumView : UIView
+@property (nonatomic, assign) CGFloat barWidth;
+@property (nonatomic, assign) CGFloat space;
+@property (nonatomic, assign) CGFloat bottomSpace;
+@property (nonatomic, assign) CGFloat topSpace;
 - (void)updateSpectra:(NSArray<NSArray<NSNumber *> *> *)spectra;
 @end
 

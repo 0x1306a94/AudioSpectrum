@@ -25,7 +25,7 @@
 
 @property (nonatomic, strong) RealtimeAnalyzer *analyzer;
 
-@property (nonatomic, strong) SpectrumView *spectrumView;
+@property (nonatomic, weak) IBOutlet SpectrumView *spectrumView;
 @end
 
 @implementation ViewController
@@ -37,10 +37,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.fftSize = 2048;
-    
-    self.spectrumView = [[SpectrumView alloc] initWithFrame:CGRectMake(0, 88, CGRectGetWidth(self.view.bounds), 300)];
-    self.spectrumView.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:self.spectrumView];
+
     
     self.analyzer = [[RealtimeAnalyzer alloc] initWithFFTSize:self.fftSize];
     
@@ -48,6 +45,14 @@
     self.player = [[AVAudioPlayerNode alloc] init];
     [self.engine attachNode:self.player];
     AVAudioMixerNode *mixer = self.engine.mainMixerNode;
+    [self.engine connect:self.player to:mixer format:nil];
+
+    NSError *error = nil;
+    if (![self.engine startAndReturnError:&error]) {
+        self.playItem.enabled = NO;
+        NSLog(@"%@", error);
+    };
+    
     [mixer removeTapOnBus:0];
     [mixer installTapOnBus:0 bufferSize:self.fftSize format:nil block:^(AVAudioPCMBuffer * _Nonnull buffer, AVAudioTime * _Nonnull when) {
         if (!self.player.isPlaying) return ;
@@ -58,19 +63,18 @@
         });
     }];
 
-    [self.engine connect:self.player to:mixer format:[mixer outputFormatForBus:0]];
-
-    NSError *error = nil;
-    if (![self.engine startAndReturnError:&error]) {
-        self.playItem.enabled = NO;
-        NSLog(@"%@", error);
-    };
 
 }
-
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    CGFloat barSpace = CGRectGetWidth(self.spectrumView.frame) / (CGFloat)(80 * 3 - 1);
+    self.spectrumView.barWidth = barSpace * 2;
+    self.spectrumView.space = barSpace;
+}
 - (IBAction)playItemAction:(UIBarButtonItem *)sender {
     if (!self.file) {
-        NSURL *url = [[NSBundle mainBundle] URLForResource:@"01.Halcyon - Runaway (Feat. Valentina Franco) (Heuse Remix).mp3" withExtension:nil];
+        NSURL *url = [[NSBundle mainBundle] URLForResource:@"03.Spektrum & Sara Skinner - Keep You.mp3" withExtension:nil];
         self.file = [[AVAudioFile alloc] initForReading:url error:nil];
         [self.player scheduleFile:self.file atTime:nil completionHandler:nil];
     }

@@ -26,11 +26,6 @@
 #define RGB(r, g, b) [UIColor colorWithRed:(r / 255.0) green:(g / 255.0) blue:(b / 255.0) alpha:1.0]
 
 @interface SpectrumView ()
-@property (nonatomic, assign) CGFloat barWidth;
-@property (nonatomic, assign) CGFloat space;
-@property (nonatomic, assign) CGFloat bottomSpace;
-@property (nonatomic, assign) CGFloat topSpace;
-
 @property (nonatomic, strong) CAGradientLayer *leftGradientLayer;
 @property (nonatomic, strong) CAGradientLayer *rightGradientLayer;
 @end
