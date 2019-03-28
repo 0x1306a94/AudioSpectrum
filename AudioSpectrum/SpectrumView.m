@@ -97,9 +97,10 @@
 }
 #pragma mark - public method
 - (void)updateSpectra:(NSArray<NSArray<NSNumber *> *> *)spectra {
-    if (spectra == NULL) return;
+    if (spectra.count == 0) return;
     UIBezierPath *leftPath = [UIBezierPath bezierPath];
-    for (int i = 0; i < 80; i++) {
+    NSUInteger count = spectra.firstObject.count;
+    for (int i = 0; i < count; i++) {
         CGFloat x = (CGFloat)i * (self.barWidth + self.space) + self.space;
         CGFloat y = [self translateAmplitudeToYPosition:spectra[0][i].floatValue];
         CGRect rect = CGRectMake(x, y, self.barWidth, CGRectGetHeight(self.bounds) - self.bottomSpace -y);
@@ -112,10 +113,11 @@
     self.leftGradientLayer.frame = CGRectMake(0, self.topSpace, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - self.topSpace - self.bottomSpace);
     self.leftGradientLayer.mask = leftMaskLayer;
     
-    if ((sizeof(spectra) / sizeof(float *)) >= 2) {
+    if (spectra.count >= 2) {
         UIBezierPath *rightPath = [UIBezierPath bezierPath];
-        for (int i = 0; i < 80; i++) {
-            CGFloat x = (CGFloat)(80 - 1 - i) * (self.barWidth + self.space) + self.space;
+        count = spectra[1].count;
+        for (int i = 0; i < count; i++) {
+            CGFloat x = (CGFloat)(count - 1 - i) * (self.barWidth + self.space) + self.space;
             CGFloat y = [self translateAmplitudeToYPosition:spectra[1][i].floatValue];
             CGRect rect = CGRectMake(x, y, self.barWidth, CGRectGetHeight(self.bounds) - self.bottomSpace -y);
             UIBezierPath *bar = [UIBezierPath bezierPathWithRect:rect];
