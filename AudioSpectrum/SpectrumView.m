@@ -93,6 +93,8 @@
 #pragma mark - public method
 - (void)updateSpectra:(NSArray<NSArray<NSNumber *> *> *)spectra {
     if (spectra.count == 0) return;
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
     UIBezierPath *leftPath = [UIBezierPath bezierPath];
     NSUInteger count = spectra.firstObject.count;
     for (int i = 0; i < count; i++) {
@@ -123,6 +125,7 @@
         self.rightGradientLayer.frame = CGRectMake(0, self.topSpace, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - self.topSpace - self.bottomSpace);
         self.rightGradientLayer.mask = rightMaskLayer;
     }
+    [CATransaction commit];
 }
 #pragma mark - getters and setters
 - (CAGradientLayer *)leftGradientLayer {

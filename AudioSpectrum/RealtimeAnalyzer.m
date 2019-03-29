@@ -8,14 +8,6 @@
 
 #import "RealtimeAnalyzer.h"
 
-/** 频带数量 */
-static int const kFrequencyBands = 80;
-/** 起始帧率 */
-static float const kStartFrequency = 100.0;
-/** 截止帧率 */
-static float const kEndFrequency = 18000.0;
-
-
 @interface BandsInfo : NSObject
 @property (nonatomic, assign) float lowerFrequency;
 @property (nonatomic, assign) float upperFrequency;
@@ -25,9 +17,18 @@ static float const kEndFrequency = 18000.0;
 
 @interface RealtimeAnalyzer ()
 @property (nonatomic, assign) int fftSize;
+/** 频带数量 */
+@property (nonatomic, assign) NSUInteger frequencyBands;
+/** 起始帧率 */
+@property (nonatomic, assign) float startFrequency;
+/** 截止帧率 */
+@property (nonatomic, assign) float endFrequency;
 @property (nonatomic, assign) FFTSetup fftSetup;
 @property (nonatomic, strong) NSMutableArray<NSMutableArray<NSNumber *> *> *spectrumBuffer;
+@property (nonatomic, strong) NSArray<NSNumber *> *aWeights;
 @property (nonatomic, strong) NSArray<BandsInfo *> *bands;
+
+
 @end
 @implementation RealtimeAnalyzer
 - (void)dealloc {
@@ -39,20 +40,25 @@ static float const kEndFrequency = 18000.0;
 - (instancetype)initWithFFTSize:(int)fftSize {
     if (self == [super init]) {
         _fftSize = fftSize;
-        _spectrumSmooth = 0.5;
         [self comminit];
     }
     return self;
 }
 
 - (void)comminit {
-    self.fftSetup = vDSP_create_fftsetup(round(log2(self.fftSize)), kFFTRadix2);
+
+    self.frequencyBands = 80;
+    self.startFrequency = 100.0;
+    self.endFrequency = 18000.0;
+    self.spectrumSmooth = 0.5;
+
+    self.fftSetup = vDSP_create_fftsetup((vDSP_Length)(round(log2(self.fftSize))), kFFTRadix2);
     
     {
         self.spectrumBuffer = [NSMutableArray<NSMutableArray<NSNumber *> *> array];
         for (NSUInteger i = 0; i < 2; i++) {
             NSMutableArray<NSNumber *> *arr = [NSMutableArray<NSNumber *> array];
-            for (int j = 0; j < kFrequencyBands; j++) {
+            for (int j = 0; j < self.frequencyBands; j++) {
                 [arr addObject: [NSNumber numberWithFloat:0.0]];
             }
             [self.spectrumBuffer addObject:arr];
@@ -62,17 +68,19 @@ static float const kEndFrequency = 18000.0;
     {
         NSMutableArray<BandsInfo *> *tmps = [NSMutableArray<BandsInfo *> array];
         //1：根据起止频谱、频带数量确定增长的倍数：2^n
-        float n = log2f(kEndFrequency / kStartFrequency) / (kFrequencyBands * 1.0);
-        BandsInfo *first = [BandsInfo createWith:kStartFrequency upperFrequency:0];
+        float n = log2f(self.endFrequency / self.startFrequency) / (self.frequencyBands * 1.0);
+        BandsInfo *first = [BandsInfo createWith:self.startFrequency upperFrequency:0];
         for (int i = 1; i <= 80; i++) {
             float highFrequency = first.lowerFrequency * powf(2, n);
-            float upperFrequency = i == kFrequencyBands ? kEndFrequency : highFrequency;
+            float upperFrequency = i == self.frequencyBands ? self.endFrequency : highFrequency;
             first.upperFrequency = upperFrequency;
             [tmps addObject:[BandsInfo createWith:first.lowerFrequency upperFrequency:first.upperFrequency]];
             first.lowerFrequency = highFrequency;
         }
         self.bands = [NSArray<BandsInfo *> arrayWithArray:tmps];
     }
+
+    self.aWeights = [self createFrequencyWeights];
 }
 #pragma mark - override getter or setter
 - (void)setSpectrumSmooth:(float)spectrumSmooth {
@@ -129,12 +137,13 @@ static float const kEndFrequency = 18000.0;
     
     //1: 定义权重数组，数组中间的5表示自己的权重
     //   可以随意修改，个数需要奇数
-    float weights[7] = {1, 2, 3, 5, 3, 2, 1};
+    int weightsCount = 7;
+    float weights[] = {1, 2, 3, 5, 3, 2, 1};
     float totalWeights = 0;
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < weightsCount; i++) {
         totalWeights += weights[i];
     }
-    int startIndex = 7 / 2;
+    int startIndex = weightsCount / 2;
     //2: 开头几个不参与计算
     NSMutableArray<NSNumber *> *averagedSpectrum = [NSMutableArray<NSNumber *> array];
     
@@ -145,7 +154,7 @@ static float const kEndFrequency = 18000.0;
     
     for (int i = startIndex; i < (spectrumCount - startIndex); i++) {
         //3: zip作用: zip([a,b,c], [x,y,z]) -> [(a,x), (b,y), (c,z)]
-        int count = MIN(((i + startIndex) - (i - startIndex) + 1), 7);
+        int count = MIN(((i + startIndex) - (i - startIndex) + 1), weightsCount);
         int zipOneIdx = (i - startIndex);
         float total = 0;
         for (int j = 0; j < count; j++) {
@@ -191,32 +200,38 @@ static float const kEndFrequency = 18000.0;
         }
         channels = channelsTemp;
     }
-    // 傅里叶变换
+
     for (int i = 0; i < channelCount; i++) {
         float *channel = channels[i];
         //2: 加汉宁窗
         float window[self.fftSize];
-        vDSP_hamm_window(window, self.fftSize, vDSP_HANN_DENORM);
+        vDSP_hann_window(window, (vDSP_Length)(self.fftSize), vDSP_HANN_NORM);
         vDSP_vmul(channel, 1, window, 1, channel, 1, self.fftSize);
+
         //3: 将实数包装成FFT要求的复数fftInOut，既是输入也是输出
         float reap[self.fftSize / 2];
         float imap[self.fftSize / 2];
         DSPSplitComplex fftInOut = (DSPSplitComplex){reap, imap};
         DSPComplex complex[self.fftSize / sizeof(DSPComplex)];
         memcpy(complex, channel, self.fftSize);
-        vDSP_ctoz(complex, 2, &fftInOut, 1, self.fftSize / 2);
+        vDSP_ctoz(complex, 2, &fftInOut, 1, (vDSP_Length)(self.fftSize / 2));
+        
         //4：执行FFT
-        vDSP_fft_zip(self.fftSetup, &fftInOut, 1, round(log2(self.fftSize)), FFT_FORWARD);
+        vDSP_fft_zrip(self.fftSetup, &fftInOut, 1, (vDSP_Length)(round(log2(self.fftSize))), FFT_FORWARD);
+
         //5：调整FFT结果，计算振幅
         fftInOut.imagp[0] = 0;
         float fftNormFactor = 1.0 / (self.fftSize * 1.0);
         float fftNormFactorFlag[1] = {fftNormFactor};
         
-        vDSP_vsmul(fftInOut.realp, 1, fftNormFactorFlag, fftInOut.realp, 1, self.fftSize / 2);
-        vDSP_vsmul(fftInOut.imagp, 1, fftNormFactorFlag, fftInOut.imagp, 1, self.fftSize / 2);
+        vDSP_vsmul(fftInOut.realp, 1, fftNormFactorFlag, fftInOut.realp, 1, (vDSP_Length)(self.fftSize / 2));
+        vDSP_vsmul(fftInOut.imagp, 1, fftNormFactorFlag, fftInOut.imagp, 1, (vDSP_Length)(self.fftSize / 2));
+
         float channelAmplitudes[self.fftSize / 2];
-        vDSP_zvabs(&fftInOut, 1, channelAmplitudes, 1, self.fftSize / 2);
+        vDSP_zvabs(&fftInOut, 1, channelAmplitudes, 1, (vDSP_Length)(self.fftSize / 2));
+        //直流分量的振幅需要再除以2
         channelAmplitudes[0] = channelAmplitudes[0] / 2;
+
         int count = self.fftSize / 2;
         NSMutableArray<NSNumber *> *arry = [NSMutableArray<NSNumber *> array];
         for (NSUInteger c = 0; c < count; c++) {
@@ -234,7 +249,7 @@ static float const kEndFrequency = 18000.0;
 #pragma mark - public method
 - (NSArray<NSArray<NSNumber *> *> *)analyse:(AVAudioPCMBuffer *)buffer {
     NSArray<NSArray<NSNumber *> *> *channelsAmplitudes = [self fft:buffer];
-    NSArray<NSNumber *> *aWeights = [self createFrequencyWeights];
+    NSArray<NSNumber *> *aWeights = self.aWeights;
     
     NSUInteger count = channelsAmplitudes.count;
     for (NSUInteger i = 0; i < count; i++) {
@@ -247,7 +262,7 @@ static float const kEndFrequency = 18000.0;
         }
         
         NSMutableArray<NSNumber *> *spectrum = [NSMutableArray<NSNumber *> array];
-        for (int t = 0; t < kFrequencyBands; t++) {
+        for (int t = 0; t < self.frequencyBands; t++) {
             float bandWidth = (float)buffer.format.sampleRate / (float)(self.fftSize * 1.0);
             float result = [self findMaxAmplitude:self.bands[t] amplitudes:weightedAmplitudes.copy bandWidth:bandWidth] * 5.0;
             [spectrum addObject: [NSNumber numberWithFloat:result]];
@@ -255,7 +270,7 @@ static float const kEndFrequency = 18000.0;
         
         spectrum = [self highlightWaveform:spectrum];
         
-        for (int t = 0; t < kFrequencyBands; t++) {
+        for (int t = 0; t < self.frequencyBands; t++) {
             float oldVal = self.spectrumBuffer[i][t].floatValue;
             oldVal = isnan(oldVal) ? 0 : oldVal;
             
