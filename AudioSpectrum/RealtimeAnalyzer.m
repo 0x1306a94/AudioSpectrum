@@ -8,11 +8,6 @@
 
 #import "RealtimeAnalyzer.h"
 
-typedef struct {
-    float lowerFrequency;
-    float upperFrequency;
-} __Bands;
-
 /** 频带数量 */
 static int const kFrequencyBands = 80;
 /** 起始帧率 */
@@ -20,14 +15,19 @@ static float const kStartFrequency = 100.0;
 /** 截止帧率 */
 static float const kEndFrequency = 18000.0;
 
+
+@interface BandsInfo : NSObject
+@property (nonatomic, assign) float lowerFrequency;
+@property (nonatomic, assign) float upperFrequency;
+
++ (instancetype)createWith:(float)lowerFrequency upperFrequency:(float)upperFrequency;
+@end
+
 @interface RealtimeAnalyzer ()
 @property (nonatomic, assign) int fftSize;
 @property (nonatomic, assign) FFTSetup fftSetup;
-
 @property (nonatomic, strong) NSMutableArray<NSMutableArray<NSNumber *> *> *spectrumBuffer;
-
-@property (nonatomic, assign) __Bands *bands;
-
+@property (nonatomic, strong) NSArray<BandsInfo *> *bands;
 @end
 @implementation RealtimeAnalyzer
 - (void)dealloc {
@@ -40,10 +40,15 @@ static float const kEndFrequency = 18000.0;
     if (self == [super init]) {
         _fftSize = fftSize;
         _spectrumSmooth = 0.5;
-        _spectrumBuffer = NULL;
-        _bands = NULL;
-        _fftSetup = vDSP_create_fftsetup(round(log2(fftSize)), kFFTRadix2);
-        
+        [self comminit];
+    }
+    return self;
+}
+
+- (void)comminit {
+    self.fftSetup = vDSP_create_fftsetup(round(log2(self.fftSize)), kFFTRadix2);
+    
+    {
         self.spectrumBuffer = [NSMutableArray<NSMutableArray<NSNumber *> *> array];
         for (NSUInteger i = 0; i < 2; i++) {
             NSMutableArray<NSNumber *> *arr = [NSMutableArray<NSNumber *> array];
@@ -53,42 +58,46 @@ static float const kEndFrequency = 18000.0;
             [self.spectrumBuffer addObject:arr];
         }
     }
-    return self;
+    
+    {
+        NSMutableArray<BandsInfo *> *tmps = [NSMutableArray<BandsInfo *> array];
+        //1：根据起止频谱、频带数量确定增长的倍数：2^n
+        float n = log2f(kEndFrequency / kStartFrequency) / (kFrequencyBands * 1.0);
+        BandsInfo *first = [BandsInfo createWith:kStartFrequency upperFrequency:0];
+        for (int i = 1; i <= 80; i++) {
+            float highFrequency = first.lowerFrequency * powf(2, n);
+            float upperFrequency = i == kFrequencyBands ? kEndFrequency : highFrequency;
+            first.upperFrequency = upperFrequency;
+            [tmps addObject:[BandsInfo createWith:first.lowerFrequency upperFrequency:first.upperFrequency]];
+            first.lowerFrequency = highFrequency;
+        }
+        self.bands = [NSArray<BandsInfo *> arrayWithArray:tmps];
+    }
 }
-
 #pragma mark - override getter or setter
 - (void)setSpectrumSmooth:(float)spectrumSmooth {
     _spectrumSmooth = MAX(0.0, spectrumSmooth);
     _spectrumSmooth = MIN(1.0, _spectrumSmooth);
 }
-- (__Bands *)bands {
-    if (_bands == NULL) {
-        __Bands tmpBands[kFrequencyBands];
-        float n = log2f(kEndFrequency / kStartFrequency) / (kFrequencyBands * 1.0);
-        __Bands nextBand = (__Bands){kStartFrequency, 0};
-        for (int i = 1; i <= kFrequencyBands; i++) {
-            float highFrequency = nextBand.lowerFrequency * powf(2, n);
-            float upperFrequency = i == kFrequencyBands ? kEndFrequency : highFrequency;
-            tmpBands[i - 1] = (__Bands){nextBand.lowerFrequency, upperFrequency};
-            nextBand.lowerFrequency = highFrequency;
-        }
-        _bands = tmpBands;
-    }
-    return _bands;
-}
+
 #pragma mark - privte method
-- (float)findMaxAmplitude:(__Bands)band amplitudes:(NSArray<NSNumber *> *)amplitudes bandWidth:(float)bandWidth {
+- (float)findMaxAmplitude:(BandsInfo *)band amplitudes:(NSArray<NSNumber *> *)amplitudes bandWidth:(float)bandWidth {
     NSUInteger amplitudesCount = amplitudes.count;
     NSUInteger startIndex = (NSUInteger)(round(band.lowerFrequency / bandWidth));
     NSUInteger endIndex = MIN((NSUInteger)(round(band.upperFrequency / bandWidth)), amplitudesCount - 1);
     if (startIndex >= amplitudesCount || endIndex >= amplitudesCount) return 0;
-    float max = amplitudes[startIndex].floatValue;
-    for (NSUInteger idx = startIndex; idx <= endIndex; idx++) {
-        if (max < amplitudes[idx].floatValue) {
-            max = amplitudes[idx].floatValue;
-        }
+    if ((endIndex - startIndex) == 0) {
+        return amplitudes[startIndex].floatValue;
     }
-    return max;
+    NSMutableArray<NSNumber *> *tmps = [NSMutableArray<NSNumber *> array];
+    for (NSUInteger i = startIndex; i <= endIndex; i++) {
+        [tmps addObject:[amplitudes[i] copy]];
+    }
+    NSNumber *max = [tmps valueForKeyPath:@"@max.self"];
+    if (isnan(max.floatValue)) {
+        NSLog(@"xxxx");
+    }
+    return max.floatValue;
 }
 - (NSArray<NSNumber *> *)createFrequencyWeights {
     float Δf = 44100.0 / (float)self.fftSize;
@@ -201,8 +210,10 @@ static float const kEndFrequency = 18000.0;
         //5：调整FFT结果，计算振幅
         fftInOut.imagp[0] = 0;
         float fftNormFactor = 1.0 / (self.fftSize * 1.0);
-        vDSP_vsmul(fftInOut.realp, 1, &fftNormFactor, fftInOut.realp, 1, self.fftSize / 2);
-        vDSP_vsmul(fftInOut.imagp, 1, &fftNormFactor, fftInOut.imagp, 1, self.fftSize / 2);
+        float fftNormFactorFlag[1] = {fftNormFactor};
+        
+        vDSP_vsmul(fftInOut.realp, 1, fftNormFactorFlag, fftInOut.realp, 1, self.fftSize / 2);
+        vDSP_vsmul(fftInOut.imagp, 1, fftNormFactorFlag, fftInOut.imagp, 1, self.fftSize / 2);
         float channelAmplitudes[self.fftSize / 2];
         vDSP_zvabs(&fftInOut, 1, channelAmplitudes, 1, self.fftSize / 2);
         channelAmplitudes[0] = channelAmplitudes[0] / 2;
@@ -210,6 +221,9 @@ static float const kEndFrequency = 18000.0;
         NSMutableArray<NSNumber *> *arry = [NSMutableArray<NSNumber *> array];
         for (NSUInteger c = 0; c < count; c++) {
             float val = channelAmplitudes[c];
+            if (isnan(val)) {
+                NSLog(@"xxxx");
+            }
             [arry addObject: [NSNumber numberWithFloat:val]];
         }
         [amplitudes addObject:arry.copy];
@@ -223,11 +237,11 @@ static float const kEndFrequency = 18000.0;
     NSArray<NSNumber *> *aWeights = [self createFrequencyWeights];
     
     NSUInteger count = channelsAmplitudes.count;
-    for (int i = 0; i < count; i++) {
+    for (NSUInteger i = 0; i < count; i++) {
         NSArray<NSNumber *> *amplitudes = channelsAmplitudes[i];
-        int subCount = self.fftSize / 2;
+        NSUInteger subCount = amplitudes.count;
         NSMutableArray<NSNumber *> *weightedAmplitudes = [NSMutableArray<NSNumber *> array];
-        for (int j = 0; j < subCount; j++) {
+        for (NSUInteger j = 0; j < subCount; j++) {
             float weighted = amplitudes[j].floatValue * aWeights[j].floatValue;
             [weightedAmplitudes addObject: [NSNumber numberWithFloat:weighted]];
         }
@@ -253,5 +267,15 @@ static float const kEndFrequency = 18000.0;
         }
     }
     return self.spectrumBuffer.copy;
+}
+@end
+
+
+@implementation BandsInfo
++ (instancetype)createWith:(float)lowerFrequency upperFrequency:(float)upperFrequency {
+    BandsInfo *info = [[BandsInfo alloc] init];
+    info.lowerFrequency = lowerFrequency;
+    info.upperFrequency = upperFrequency;
+    return info;
 }
 @end
