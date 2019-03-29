@@ -221,11 +221,10 @@
 
         //5：调整FFT结果，计算振幅
         fftInOut.imagp[0] = 0;
-        float fftNormFactor = 1.0 / (self.fftSize * 1.0);
-        float fftNormFactorFlag[1] = {fftNormFactor};
-        
-        vDSP_vsmul(fftInOut.realp, 1, fftNormFactorFlag, fftInOut.realp, 1, (vDSP_Length)(self.fftSize / 2));
-        vDSP_vsmul(fftInOut.imagp, 1, fftNormFactorFlag, fftInOut.imagp, 1, (vDSP_Length)(self.fftSize / 2));
+        float fftNormFactor = 1.0 / (float)(self.fftSize);
+
+        vDSP_vsmul(fftInOut.realp, 1, &fftNormFactor, fftInOut.realp, 1, (vDSP_Length)(self.fftSize / 2));
+        vDSP_vsmul(fftInOut.imagp, 1, &fftNormFactor, fftInOut.imagp, 1, (vDSP_Length)(self.fftSize / 2));
 
         float channelAmplitudes[self.fftSize / 2];
         vDSP_zvabs(&fftInOut, 1, channelAmplitudes, 1, (vDSP_Length)(self.fftSize / 2));
