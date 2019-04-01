@@ -30,6 +30,7 @@ UITableViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray<NSString *> *trackPaths;
 @property (nonatomic, weak) TrackCell *currentCell;
+@property (nonatomic, assign) BOOL switchAudio;
 @end
 
 @implementation ViewController
@@ -106,14 +107,16 @@ UITableViewDelegate>
         NSLog(@"create AVAudioFile error: %@", error);
         return;
     }
+    self.switchAudio = YES;
     [self.player stop];
     [self.player scheduleFile:file atTime:nil completionHandler:^{
         NSLog(@"播放完成");
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (self.currentCell) {
+            if (!self.switchAudio && self.currentCell) {
                 [self.currentCell updateState:NO];
                 self.currentCell = nil;
             };
+            self.switchAudio = NO;
         });
     }];
     [self.player play];
