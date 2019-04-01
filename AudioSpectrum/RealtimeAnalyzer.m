@@ -102,9 +102,6 @@
         [tmps addObject:[amplitudes[i] copy]];
     }
     NSNumber *max = [tmps valueForKeyPath:@"@max.self"];
-    if (isnan(max.floatValue)) {
-        NSLog(@"xxxx");
-    }
     return max.floatValue;
 }
 - (NSArray<NSNumber *> *)createFrequencyWeights {
@@ -212,9 +209,10 @@
         float reap[self.fftSize / 2];
         float imap[self.fftSize / 2];
         DSPSplitComplex fftInOut = (DSPSplitComplex){reap, imap};
-        DSPComplex complex[self.fftSize / sizeof(DSPComplex)];
-        memcpy(complex, channel, self.fftSize);
-        vDSP_ctoz(complex, 2, &fftInOut, 1, (vDSP_Length)(self.fftSize / 2));
+//        DSPComplex complex[self.fftSize / sizeof(DSPComplex)];
+//        memcpy(complex, channel, self.fftSize);
+//        vDSP_ctoz(complex, 2, &fftInOut, 1, (vDSP_Length)(self.fftSize / 2));
+        vDSP_ctoz((DSPComplex *)channel, 2, &fftInOut, 1, (vDSP_Length)(self.fftSize / 2));
         
         //4：执行FFT
         vDSP_fft_zrip(self.fftSetup, &fftInOut, 1, (vDSP_Length)(round(log2(self.fftSize))), FFT_FORWARD);
@@ -235,9 +233,6 @@
         NSMutableArray<NSNumber *> *arry = [NSMutableArray<NSNumber *> array];
         for (NSUInteger c = 0; c < count; c++) {
             float val = channelAmplitudes[c];
-            if (isnan(val)) {
-                NSLog(@"xxxx");
-            }
             [arry addObject: [NSNumber numberWithFloat:val]];
         }
         [amplitudes addObject:arry.copy];
@@ -271,11 +266,11 @@
         
         for (int t = 0; t < self.frequencyBands; t++) {
             float oldVal = self.spectrumBuffer[i][t].floatValue;
-            oldVal = isnan(oldVal) ? 0 : oldVal;
-            
+//            oldVal = isnan(oldVal) ? 0 : oldVal;
+
             float newVal = spectrum[t].floatValue;
-            newVal = isnan(newVal) ? 0 : newVal;
-            
+//            newVal = isnan(newVal) ? 0 : newVal;
+
             float result = oldVal * self.spectrumSmooth + newVal * (1.0 - self.spectrumSmooth);
             self.spectrumBuffer[i][t] = [NSNumber numberWithFloat:(isnan(result) ? 0 : result)];
         }
