@@ -25,25 +25,31 @@
                                     <constraint firstAttribute="height" constant="150" id="b8P-Kz-P1A"/>
                                 </constraints>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vaE-4o-XdQ">
+                                <rect key="frame" x="0.0" y="238" width="414" height="624"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="3kg-JV-QPW"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="cM2-Xf-VDb"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vaE-4o-XdQ" secondAttribute="trailing" id="0w3-0d-phz"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="vaE-4o-XdQ" secondAttribute="bottom" id="1uS-Ti-Wlz"/>
                             <constraint firstItem="au2-5j-rlo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="IuI-pR-r6n"/>
+                            <constraint firstItem="vaE-4o-XdQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bgN-Bx-kF2"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="au2-5j-rlo" secondAttribute="trailing" id="cmC-wu-XT3"/>
                             <constraint firstItem="au2-5j-rlo" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="isv-eA-Xtf"/>
+                            <constraint firstItem="vaE-4o-XdQ" firstAttribute="top" secondItem="au2-5j-rlo" secondAttribute="bottom" id="kGb-00-B7w"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="zZh-81-BiX">
-                        <barButtonItem key="rightBarButtonItem" title="play" id="mcW-fz-ccR">
-                            <connections>
-                                <action selector="playItemAction:" destination="BYZ-38-t0r" id="noa-JS-A9w"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="zZh-81-BiX"/>
                     <connections>
-                        <outlet property="playItem" destination="mcW-fz-ccR" id="2ij-WI-A4J"/>
                         <outlet property="spectrumView" destination="au2-5j-rlo" id="pGS-As-HD1"/>
+                        <outlet property="tableView" destination="vaE-4o-XdQ" id="dbl-41-hXe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

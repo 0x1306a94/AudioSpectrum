@@ -20,6 +20,8 @@
 		A41DD183224B1B0000915596 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A41DD182224B1B0000915596 /* main.m */; };
 		A41DD18D224B1B0100915596 /* AudioSpectrumTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A41DD18C224B1B0100915596 /* AudioSpectrumTests.m */; };
 		A41DD198224B1B0100915596 /* AudioSpectrumUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A41DD197224B1B0100915596 /* AudioSpectrumUITests.m */; };
+		A465F2002251BBF100799113 /* TrackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A465F1FE2251BBF100799113 /* TrackCell.m */; };
+		A465F2012251BBF100799113 /* TrackCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A465F1FF2251BBF100799113 /* TrackCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,9 @@
 		A41DD193224B1B0100915596 /* AudioSpectrumUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioSpectrumUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A41DD197224B1B0100915596 /* AudioSpectrumUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioSpectrumUITests.m; sourceTree = "<group>"; };
 		A41DD199224B1B0100915596 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A465F1FD2251BBF100799113 /* TrackCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrackCell.h; sourceTree = "<group>"; };
+		A465F1FE2251BBF100799113 /* TrackCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrackCell.m; sourceTree = "<group>"; };
+		A465F1FF2251BBF100799113 /* TrackCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrackCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +126,9 @@
 				A41DD176224B1AFD00915596 /* ViewController.h */,
 				A41DD177224B1AFD00915596 /* ViewController.m */,
 				A41DD179224B1AFD00915596 /* Main.storyboard */,
+				A465F1FD2251BBF100799113 /* TrackCell.h */,
+				A465F1FE2251BBF100799113 /* TrackCell.m */,
+				A465F1FF2251BBF100799113 /* TrackCell.xib */,
 				A41DD17C224B1B0000915596 /* Assets.xcassets */,
 				A41DD17E224B1B0000915596 /* LaunchScreen.storyboard */,
 				A41DD181224B1B0000915596 /* Info.plist */,
@@ -257,6 +265,7 @@
 				3CECB957224CCE6100470BFF /* 03.Spektrum & Sara Skinner - Keep You.mp3 in Resources */,
 				3CECB956224CCE6100470BFF /* 02.Ellis - Clear My Head (Radio Edit) [NCS].mp3 in Resources */,
 				A41DD180224B1B0000915596 /* LaunchScreen.storyboard in Resources */,
+				A465F2012251BBF100799113 /* TrackCell.xib in Resources */,
 				A41DD17D224B1B0000915596 /* Assets.xcassets in Resources */,
 				3CECB958224CCE6100470BFF /* 01.Halcyon - Runaway (Feat. Valentina Franco) (Heuse Remix).mp3 in Resources */,
 				A41DD17B224B1AFD00915596 /* Main.storyboard in Resources */,
@@ -289,6 +298,7 @@
 				A41DD183224B1B0000915596 /* main.m in Sources */,
 				3C5F3BFC224B96D4009F9881 /* RealtimeAnalyzer.m in Sources */,
 				A41DD175224B1AFD00915596 /* AppDelegate.m in Sources */,
+				A465F2002251BBF100799113 /* TrackCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
