@@ -111,12 +111,15 @@ UITableViewDelegate>
     [self.player stop];
     [self.player scheduleFile:file atTime:nil completionHandler:^{
         NSLog(@"播放完成");
+        if (self.switchAudio) {
+            self.switchAudio = NO;
+            return ;
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (!self.switchAudio && self.currentCell) {
+            if (self.currentCell) {
                 [self.currentCell updateState:NO];
                 self.currentCell = nil;
             };
-            self.switchAudio = NO;
         });
     }];
     [self.player play];
@@ -137,8 +140,6 @@ UITableViewDelegate>
                 self.currentCell = nil;
                 [self.player stop];
                 return;
-            } else {
-                [self.currentCell updateState:NO];
             }
         }
         [self playWithTarckName:self.trackPaths[indexPath.row]];
