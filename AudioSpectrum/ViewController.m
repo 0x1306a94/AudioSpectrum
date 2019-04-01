@@ -109,10 +109,12 @@ UITableViewDelegate>
     [self.player stop];
     [self.player scheduleFile:file atTime:nil completionHandler:^{
         NSLog(@"播放完成");
-        if (self.currentCell) {
-            [self.currentCell updateState:NO];
-            self.currentCell = nil;
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (self.currentCell) {
+                [self.currentCell updateState:NO];
+                self.currentCell = nil;
+            };
+        });
     }];
     [self.player play];
 }
