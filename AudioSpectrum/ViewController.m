@@ -56,7 +56,7 @@ UITableViewDelegate>
         }];
     }
 
-    self.fftSize = 2048;
+    self.fftSize = 1024;
 
     [self setupPlayer];
 }
