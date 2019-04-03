@@ -22,6 +22,8 @@
 		A41DD198224B1B0100915596 /* AudioSpectrumUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A41DD197224B1B0100915596 /* AudioSpectrumUITests.m */; };
 		A465F2002251BBF100799113 /* TrackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A465F1FE2251BBF100799113 /* TrackCell.m */; };
 		A465F2012251BBF100799113 /* TrackCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A465F1FF2251BBF100799113 /* TrackCell.xib */; };
+		A465F22122547B0B00799113 /* NSData+SSMappedFile.m in Sources */ = {isa = PBXBuildFile; fileRef = A465F22022547B0B00799113 /* NSData+SSMappedFile.m */; };
+		A465F22822547CAB00799113 /* SSAudioFileProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = A465F22722547CAB00799113 /* SSAudioFileProvider.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +70,11 @@
 		A465F1FD2251BBF100799113 /* TrackCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrackCell.h; sourceTree = "<group>"; };
 		A465F1FE2251BBF100799113 /* TrackCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrackCell.m; sourceTree = "<group>"; };
 		A465F1FF2251BBF100799113 /* TrackCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrackCell.xib; sourceTree = "<group>"; };
+		A465F21F22547B0B00799113 /* NSData+SSMappedFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+SSMappedFile.h"; sourceTree = "<group>"; };
+		A465F22022547B0B00799113 /* NSData+SSMappedFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+SSMappedFile.m"; sourceTree = "<group>"; };
+		A465F22522547C4100799113 /* SSAudioFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSAudioFile.h; sourceTree = "<group>"; };
+		A465F22622547CAB00799113 /* SSAudioFileProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSAudioFileProvider.h; sourceTree = "<group>"; };
+		A465F22722547CAB00799113 /* SSAudioFileProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSAudioFileProvider.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +125,7 @@
 		A41DD172224B1AFD00915596 /* AudioSpectrum */ = {
 			isa = PBXGroup;
 			children = (
+				A465F21E22547ACD00799113 /* Classes */,
 				3CECB955224CCE6100470BFF /* 01.Halcyon - Runaway (Feat. Valentina Franco) (Heuse Remix).mp3 */,
 				3CECB953224CCE6000470BFF /* 02.Ellis - Clear My Head (Radio Edit) [NCS].mp3 */,
 				3CECB954224CCE6100470BFF /* 03.Spektrum & Sara Skinner - Keep You.mp3 */,
@@ -133,10 +141,6 @@
 				A41DD17E224B1B0000915596 /* LaunchScreen.storyboard */,
 				A41DD181224B1B0000915596 /* Info.plist */,
 				A41DD182224B1B0000915596 /* main.m */,
-				3C5F3BFA224B96D4009F9881 /* RealtimeAnalyzer.h */,
-				3C5F3BFB224B96D4009F9881 /* RealtimeAnalyzer.m */,
-				3C5F3BFD224C6DEE009F9881 /* SpectrumView.h */,
-				3C5F3BFE224C6DEE009F9881 /* SpectrumView.m */,
 			);
 			path = AudioSpectrum;
 			sourceTree = "<group>";
@@ -157,6 +161,22 @@
 				A41DD199224B1B0100915596 /* Info.plist */,
 			);
 			path = AudioSpectrumUITests;
+			sourceTree = "<group>";
+		};
+		A465F21E22547ACD00799113 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				3C5F3BFA224B96D4009F9881 /* RealtimeAnalyzer.h */,
+				3C5F3BFB224B96D4009F9881 /* RealtimeAnalyzer.m */,
+				3C5F3BFD224C6DEE009F9881 /* SpectrumView.h */,
+				3C5F3BFE224C6DEE009F9881 /* SpectrumView.m */,
+				A465F21F22547B0B00799113 /* NSData+SSMappedFile.h */,
+				A465F22022547B0B00799113 /* NSData+SSMappedFile.m */,
+				A465F22522547C4100799113 /* SSAudioFile.h */,
+				A465F22622547CAB00799113 /* SSAudioFileProvider.h */,
+				A465F22722547CAB00799113 /* SSAudioFileProvider.m */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -296,8 +316,10 @@
 				3C5F3BFF224C6DEE009F9881 /* SpectrumView.m in Sources */,
 				A41DD178224B1AFD00915596 /* ViewController.m in Sources */,
 				A41DD183224B1B0000915596 /* main.m in Sources */,
+				A465F22822547CAB00799113 /* SSAudioFileProvider.m in Sources */,
 				3C5F3BFC224B96D4009F9881 /* RealtimeAnalyzer.m in Sources */,
 				A41DD175224B1AFD00915596 /* AppDelegate.m in Sources */,
+				A465F22122547B0B00799113 /* NSData+SSMappedFile.m in Sources */,
 				A465F2002251BBF100799113 /* TrackCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
