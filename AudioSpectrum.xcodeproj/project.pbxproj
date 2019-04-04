@@ -24,6 +24,9 @@
 		A465F2012251BBF100799113 /* TrackCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A465F1FF2251BBF100799113 /* TrackCell.xib */; };
 		A465F22122547B0B00799113 /* NSData+SSMappedFile.m in Sources */ = {isa = PBXBuildFile; fileRef = A465F22022547B0B00799113 /* NSData+SSMappedFile.m */; };
 		A465F22822547CAB00799113 /* SSAudioFileProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = A465F22722547CAB00799113 /* SSAudioFileProvider.m */; };
+		A465F29D2254A70700799113 /* SSAudioDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = A465F29C2254A70700799113 /* SSAudioDecoder.m */; };
+		A465F2A02254A84F00799113 /* SSAudioCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = A465F29F2254A84F00799113 /* SSAudioCommon.m */; };
+		A465F2A3225591A100799113 /* SSAudioLPCM.m in Sources */ = {isa = PBXBuildFile; fileRef = A465F2A2225591A100799113 /* SSAudioLPCM.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +78,12 @@
 		A465F22522547C4100799113 /* SSAudioFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSAudioFile.h; sourceTree = "<group>"; };
 		A465F22622547CAB00799113 /* SSAudioFileProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSAudioFileProvider.h; sourceTree = "<group>"; };
 		A465F22722547CAB00799113 /* SSAudioFileProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSAudioFileProvider.m; sourceTree = "<group>"; };
+		A465F29B2254A70700799113 /* SSAudioDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSAudioDecoder.h; sourceTree = "<group>"; };
+		A465F29C2254A70700799113 /* SSAudioDecoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSAudioDecoder.m; sourceTree = "<group>"; };
+		A465F29E2254A84F00799113 /* SSAudioCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSAudioCommon.h; sourceTree = "<group>"; };
+		A465F29F2254A84F00799113 /* SSAudioCommon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSAudioCommon.m; sourceTree = "<group>"; };
+		A465F2A1225591A100799113 /* SSAudioLPCM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSAudioLPCM.h; sourceTree = "<group>"; };
+		A465F2A2225591A100799113 /* SSAudioLPCM.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSAudioLPCM.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +184,12 @@
 				A465F22522547C4100799113 /* SSAudioFile.h */,
 				A465F22622547CAB00799113 /* SSAudioFileProvider.h */,
 				A465F22722547CAB00799113 /* SSAudioFileProvider.m */,
+				A465F29B2254A70700799113 /* SSAudioDecoder.h */,
+				A465F29C2254A70700799113 /* SSAudioDecoder.m */,
+				A465F2A1225591A100799113 /* SSAudioLPCM.h */,
+				A465F2A2225591A100799113 /* SSAudioLPCM.m */,
+				A465F29E2254A84F00799113 /* SSAudioCommon.h */,
+				A465F29F2254A84F00799113 /* SSAudioCommon.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -314,10 +329,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C5F3BFF224C6DEE009F9881 /* SpectrumView.m in Sources */,
+				A465F2A02254A84F00799113 /* SSAudioCommon.m in Sources */,
 				A41DD178224B1AFD00915596 /* ViewController.m in Sources */,
 				A41DD183224B1B0000915596 /* main.m in Sources */,
 				A465F22822547CAB00799113 /* SSAudioFileProvider.m in Sources */,
+				A465F29D2254A70700799113 /* SSAudioDecoder.m in Sources */,
 				3C5F3BFC224B96D4009F9881 /* RealtimeAnalyzer.m in Sources */,
+				A465F2A3225591A100799113 /* SSAudioLPCM.m in Sources */,
 				A41DD175224B1AFD00915596 /* AppDelegate.m in Sources */,
 				A465F22122547B0B00799113 /* NSData+SSMappedFile.m in Sources */,
 				A465F2002251BBF100799113 /* TrackCell.m in Sources */,
