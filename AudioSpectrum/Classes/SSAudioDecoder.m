@@ -17,6 +17,12 @@
 
 #define kDefaultBufferByteCount  35280
 
+
+typedef struct {
+    AudioBufferList *bufferList;
+    AudioStreamPacketDescription *aspd;
+} SSAudioDecoderContext;
+
 @interface SSAudioDecoder ()
 @property (nonatomic, strong) SSAudioFileProvider *fileProvider;
 @property (nonatomic, assign) AudioFileTypeID fileType;
@@ -99,9 +105,16 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
                                          AudioStreamPacketDescription **outDataPacketDescription,
                                          void *inUserData)
 {
-    AudioBufferList audioBufferList = *(AudioBufferList *)inUserData;
+    SSAudioDecoderContext context = *(SSAudioDecoderContext *)inUserData;
+    AudioBufferList audioBufferList = *(context.bufferList);
+    ioData->mNumberBuffers = 1;
+    ioData->mBuffers[0].mNumberChannels = 2;
     ioData->mBuffers[0].mData = audioBufferList.mBuffers[0].mData;
     ioData->mBuffers[0].mDataByteSize = audioBufferList.mBuffers[0].mDataByteSize;
+    if (outDataPacketDescription) {
+        *outDataPacketDescription = context.aspd;
+    }
+    *ioNumberDataPackets = 1;
     return noErr;
 }
 + (NSThread *)decoderThread {
@@ -392,6 +405,7 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
                 } else {
                     NSLog(@"no float data");
                 }
+                [self.class printAudioStreamBasicDescription:_asdb];
                 _bufferByteCount = (_bufferTime * _asdb.mSampleRate / 1000) * (_asdb.mChannelsPerFrame * _asdb.mBitsPerChannel / 8);
                 _bufferByteCount = MAX(_bufferByteCount, kDefaultBufferByteCount);
                 ss_call_main_thread(^{
@@ -447,6 +461,7 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
                             } else {
                                 NSLog(@"no float data");
                             }
+                            [self.class printAudioStreamBasicDescription:_asdb];
                             flag = YES;
                             [self calculatepPacketDuration];
                             _bufferByteCount = (_bufferTime * _asdb.mSampleRate / 1000) * (_asdb.mChannelsPerFrame * _asdb.mBitsPerChannel / 8);
@@ -512,8 +527,8 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
 
             AudioStreamPacketDescription aspd = inPacketDescriptions[i];
             SInt64 packetOffset = aspd.mStartOffset;
-            /*
 
+            /*
             //设置输入
             AudioBufferList inAaudioBufferList;
             inAaudioBufferList.mNumberBuffers = 1;
@@ -522,6 +537,10 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
             inAaudioBufferList.mBuffers[0].mData = calloc(1, aspd.mDataByteSize);
             memcpy(inAaudioBufferList.mBuffers[0].mData, (inInputData + packetOffset), aspd.mDataByteSize);
 
+            SSAudioDecoderContext context = {
+                &inAaudioBufferList,
+                &aspd
+            };
             //设置输出
             void *buffer = (void *)malloc(aspd.mDataByteSize);
             memset(buffer, 0, aspd.mDataByteSize);
@@ -535,10 +554,10 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
 
             OSStatus err = AudioConverterFillComplexBuffer(_audioConverter,
                                                            __ss_decoder_data_proc__,
-                                                           &inAaudioBufferList,
+                                                           &context,
                                                            &ioOutputDataPacketSize,
                                                            &outAudioBufferList,
-                                                           NULL);
+                                                           &aspd);
             if (err != noErr) {
                 NSLog(@"%@", ss_OSStatusToString(err));
                 return;
@@ -577,6 +596,21 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
 }
 
 #pragma mark - public method
++ (void)printAudioStreamBasicDescription:(AudioStreamBasicDescription)asbd {
+    char formatID[5];
+    UInt32 mFormatID = CFSwapInt32HostToBig(asbd.mFormatID);
+    bcopy (&mFormatID, formatID, 4);
+    formatID[4] = '\0';
+    printf("Sample Rate:         %10.0f\n",  asbd.mSampleRate);
+    printf("Format ID:           %10s\n",    formatID);
+    printf("Format Flags:        %10X\n",    (unsigned int)asbd.mFormatFlags);
+    printf("Bytes per Packet:    %10d\n",    (unsigned int)asbd.mBytesPerPacket);
+    printf("Frames per Packet:   %10d\n",    (unsigned int)asbd.mFramesPerPacket);
+    printf("Bytes per Frame:     %10d\n",    (unsigned int)asbd.mBytesPerFrame);
+    printf("Channels per Frame:  %10d\n",    (unsigned int)asbd.mChannelsPerFrame);
+    printf("Bits per Channel:    %10d\n",    (unsigned int)asbd.mBitsPerChannel);
+    printf("\n");
+}
 + (AudioStreamBasicDescription)defaultOutputFormat
 {
     static AudioStreamBasicDescription defaultOutputFormat;

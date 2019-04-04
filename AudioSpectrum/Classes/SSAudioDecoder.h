@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)startDecoder;
 - (void)stopDecoder;
 
++ (void)printAudioStreamBasicDescription:(AudioStreamBasicDescription)asbd;
 + (AudioStreamBasicDescription)defaultOutputFormat;
 + (BOOL)isFloatFormat:(AudioStreamBasicDescription)asbd;
 
