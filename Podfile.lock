@@ -1,0 +1,21 @@
+PODS:
+  - AudioStreamer (1.4.0)
+
+DEPENDENCIES:
+  - AudioStreamer (from `https://github.com/syedhali/AudioStreamer.git`)
+
+EXTERNAL SOURCES:
+  AudioStreamer:
+    :git: https://github.com/syedhali/AudioStreamer.git
+
+CHECKOUT OPTIONS:
+  AudioStreamer:
+    :commit: cc75d33786b2ad5aadee6cdd3d36c1ca21ad85ee
+    :git: https://github.com/syedhali/AudioStreamer.git
+
+SPEC CHECKSUMS:
+  AudioStreamer: f1b7b5d074b8c7e713549bcc035d52df97a02ddf
+
+PODFILE CHECKSUM: 7db10be479f1923799ee301a916611085fb95448
+
+COCOAPODS: 1.9.0.beta.2

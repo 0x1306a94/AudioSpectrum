@@ -6,17 +6,16 @@
 //  Copyright © 2019 taihe. All rights reserved.
 //
 
+#import "SSAudioCommon.h"
 #import "SSAudioDecoder.h"
 #import "SSAudioFile.h"
 #import "SSAudioFileProvider.h"
-#import "SSAudioCommon.h"
 #import "SSAudioLPCM.h"
 
 #define BitRateEstimationMaxPackets 5000
 #define BitRateEstimationMinPackets 10
 
-#define kDefaultBufferByteCount  35280
-
+#define kDefaultBufferByteCount 35280
 
 typedef struct {
     AudioBufferList *bufferList;
@@ -40,8 +39,7 @@ typedef struct {
 @property (nonatomic, strong) SSAudioLPCM *lpcm;
 @end
 
-@implementation SSAudioDecoder
-{
+@implementation SSAudioDecoder {
     /** 是否连续 */
     BOOL _discontinuous;
     AudioFileStreamID _audioFileStreamID;
@@ -64,34 +62,32 @@ typedef struct {
     NSUInteger _bufferTime;
     NSUInteger _bufferByteCount;
     struct {
-        unsigned int didAsbd: 1;
-        unsigned int didReady: 1;
-        unsigned int didReadyPlay: 1;
+        unsigned int didAsbd : 1;
+        unsigned int didReady : 1;
+        unsigned int didReadyPlay : 1;
     } __delegateFlag;
 }
 
-@synthesize asdb = _asdb;
-@synthesize bitRate = _bitRate;
-@synthesize maxPacketSize = _maxPacketSize;
+@synthesize asdb               = _asdb;
+@synthesize bitRate            = _bitRate;
+@synthesize maxPacketSize      = _maxPacketSize;
 @synthesize audioDataByteCount = _audioDataByteCount;
 
-static void __ss_AudioFileStream_PropertyListenerProc__(void *                            inClientData,
-                                                        AudioFileStreamID                inAudioFileStream,
-                                                        AudioFileStreamPropertyID        inPropertyID,
-                                                        AudioFileStreamPropertyFlags *    ioFlags)
-{
+static void __ss_AudioFileStream_PropertyListenerProc__(void *inClientData,
+                                                        AudioFileStreamID inAudioFileStream,
+                                                        AudioFileStreamPropertyID inPropertyID,
+                                                        AudioFileStreamPropertyFlags *ioFlags) {
     SSAudioDecoder *decoder = (__bridge SSAudioDecoder *)inClientData;
     [decoder handlePropertyChangeForFileStream:inAudioFileStream
                           fileStreamPropertyID:inPropertyID
                                        ioFlags:ioFlags];
 }
 
-static void __ss_AudioFileStream_PacketsProc__(void *                            inClientData,
-                                               UInt32                            inNumberBytes,
-                                               UInt32                            inNumberPackets,
-                                               const void *                    inInputData,
-                                               AudioStreamPacketDescription    *inPacketDescriptions)
-{
+static void __ss_AudioFileStream_PacketsProc__(void *inClientData,
+                                               UInt32 inNumberBytes,
+                                               UInt32 inNumberPackets,
+                                               const void *inInputData,
+                                               AudioStreamPacketDescription *inPacketDescriptions) {
     SSAudioDecoder *decoder = (__bridge SSAudioDecoder *)inClientData;
     [decoder handleAudioPackets:inInputData
                     numberBytes:inNumberBytes
@@ -103,14 +99,13 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
                                          UInt32 *ioNumberDataPackets,
                                          AudioBufferList *ioData,
                                          AudioStreamPacketDescription **outDataPacketDescription,
-                                         void *inUserData)
-{
-    SSAudioDecoderContext context = *(SSAudioDecoderContext *)inUserData;
-    AudioBufferList audioBufferList = *(context.bufferList);
-    ioData->mNumberBuffers = 1;
+                                         void *inUserData) {
+    SSAudioDecoderContext context       = *(SSAudioDecoderContext *)inUserData;
+    AudioBufferList audioBufferList     = *(context.bufferList);
+    ioData->mNumberBuffers              = 1;
     ioData->mBuffers[0].mNumberChannels = 2;
-    ioData->mBuffers[0].mData = audioBufferList.mBuffers[0].mData;
-    ioData->mBuffers[0].mDataByteSize = audioBufferList.mBuffers[0].mDataByteSize;
+    ioData->mBuffers[0].mData           = audioBufferList.mBuffers[0].mData;
+    ioData->mBuffers[0].mDataByteSize   = audioBufferList.mBuffers[0].mDataByteSize;
     if (outDataPacketDescription) {
         *outDataPacketDescription = context.aspd;
     }
@@ -120,7 +115,7 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
 + (NSThread *)decoderThread {
     static NSThread *thread = nil;
     if (thread) return thread;
-    thread = [[NSThread alloc] initWithTarget:self selector:@selector(decoderThreadRun) object:nil];
+    thread      = [[NSThread alloc] initWithTarget:self selector:@selector(decoderThreadRun) object:nil];
     thread.name = @"com.0x1306a94.audio.decoder.thread";
     [thread start];
     return thread;
@@ -134,19 +129,19 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
 }
 - (instancetype)initWithFileProvider:(__kindof SSAudioFileProvider *)fileProvider {
     if (self == [super init]) {
-        self.fileProvider = fileProvider;
+        self.fileProvider   = fileProvider;
         self.readDataOffset = 0;
-        _discontinuous = NO;
-        _bufferTime = 200;
-        _audioConverter = NULL;
-        self.lpcm = [[SSAudioLPCM alloc] init];
+        _discontinuous      = NO;
+        _bufferTime         = 200;
+        _audioConverter     = NULL;
+        self.lpcm           = [[SSAudioLPCM alloc] init];
 
         self.fileSize = fileProvider.expectedLength;
 
         self.readyToProducePackets = NO;
         if (fileProvider.isReady) {
             NSArray *fallbackTypeIDs = ss_get_fallbackTypeIDs(fileProvider.mimeType, fileProvider.fileExtension);
-            OSStatus err = noErr;
+            OSStatus err             = noErr;
             for (id obj in fallbackTypeIDs) {
                 AudioFileTypeID fileTypeHint = (AudioFileTypeID)[obj unsignedIntegerValue];
                 if ((err = AudioFileStreamOpen((__bridge void *)(self), __ss_AudioFileStream_PropertyListenerProc__, __ss_AudioFileStream_PacketsProc__, fileTypeHint, &_audioFileStreamID)) == noErr) {
@@ -162,54 +157,50 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
     return self;
 }
 #pragma mark - override getter or setter
-- (BOOL)available
-{
+- (BOOL)available {
     return _audioFileStreamID != NULL;
 }
 - (void)setDelegate:(id<SSAudioDecoderDelegate>)delegate {
-    _delegate = delegate;
-    __delegateFlag.didAsbd = [delegate respondsToSelector:@selector(ssAudioDecoder:didParseAudioStreamBasicDescription:)];
-    __delegateFlag.didReady = [delegate respondsToSelector:@selector(ssAudioDecoderDidReadyToProducePackets:)];
+    _delegate                   = delegate;
+    __delegateFlag.didAsbd      = [delegate respondsToSelector:@selector(ssAudioDecoder:didParseAudioStreamBasicDescription:)];
+    __delegateFlag.didReady     = [delegate respondsToSelector:@selector(ssAudioDecoderDidReadyToProducePackets:)];
     __delegateFlag.didReadyPlay = [delegate respondsToSelector:@selector(ssAudioDecoderDidReadyPlay:)];
 }
 #pragma mark - private method
-- (void)startDecoder
-{
+- (void)startDecoder {
     if (self.decoding) return;
     [self performSelector:@selector(_startDecoder) onThread:[self.class decoderThread] withObject:nil waitUntilDone:NO];
 }
 
-- (void)stopDecoder
-{
+- (void)stopDecoder {
     if (!self.decoding) return;
     [self performSelector:@selector(_stopDecoder) onThread:[self.class decoderThread] withObject:nil waitUntilDone:NO];
 }
 
-- (void)_startDecoder
-{
+- (void)_startDecoder {
     if (self.decoding) return;
     self.decoding = YES;
     while (self.decoding) {
 
-//        if (self.readyToProducePackets) {
-//            // 可以开始解析音频数据
-//            if (_audioConverter == NULL) {
-//                [self setupAudioConverterRef];
-//                self.readDataOffset = _dataOffset;
-//            }
-//            NSUInteger length = MIN(4096, self.fileProvider.expectedLength - self.readDataOffset);
-//
-//
-//            return;
-//        }
+        //        if (self.readyToProducePackets) {
+        //            // 可以开始解析音频数据
+        //            if (_audioConverter == NULL) {
+        //                [self setupAudioConverterRef];
+        //                self.readDataOffset = _dataOffset;
+        //            }
+        //            NSUInteger length = MIN(4096, self.fileProvider.expectedLength - self.readDataOffset);
+        //
+        //
+        //            return;
+        //        }
         NSUInteger length = MIN(4096, self.fileProvider.expectedLength - self.readDataOffset);
         if (length == 0) break;
         NSRange range = NSMakeRange(self.readDataOffset, length);
-        NSData *data = [self.fileProvider.mappedData subdataWithRange:range];
+        NSData *data  = [self.fileProvider.mappedData subdataWithRange:range];
         self.readDataOffset += length;
-        OSStatus err = noErr;
+        OSStatus err                   = noErr;
         AudioFileStreamParseFlags flag = (_discontinuous ? kAudioFileStreamParseFlag_Discontinuity : 0);
-        err = AudioFileStreamParseBytes(_audioFileStreamID, (UInt32)length, data.bytes, flag);
+        err                            = AudioFileStreamParseBytes(_audioFileStreamID, (UInt32)length, data.bytes, flag);
         /*
          kAudioFileStreamError_UnsupportedFileType        = 'typ?',
          kAudioFileStreamError_UnsupportedDataFormat      = 'fmt?',
@@ -226,63 +217,51 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
          */
 
         switch (err) {
-            case kAudioFileStreamError_UnsupportedFileType:
-            {
+            case kAudioFileStreamError_UnsupportedFileType: {
                 NSLog(@"kAudioFileStreamError_UnsupportedFileType");
                 break;
             }
-            case kAudioFileStreamError_UnsupportedDataFormat:
-            {
+            case kAudioFileStreamError_UnsupportedDataFormat: {
                 NSLog(@"kAudioFileStreamError_UnsupportedDataFormat");
                 break;
             }
-            case kAudioFileStreamError_UnsupportedProperty:
-            {
+            case kAudioFileStreamError_UnsupportedProperty: {
                 NSLog(@"kAudioFileStreamError_UnsupportedProperty");
                 break;
             }
-            case kAudioFileStreamError_BadPropertySize:
-            {
+            case kAudioFileStreamError_BadPropertySize: {
                 NSLog(@"kAudioFileStreamError_BadPropertySize");
                 break;
             }
-            case kAudioFileStreamError_NotOptimized:
-            {
+            case kAudioFileStreamError_NotOptimized: {
                 NSLog(@"kAudioFileStreamError_NotOptimized");
                 break;
             }
-            case kAudioFileStreamError_InvalidPacketOffset:
-            {
+            case kAudioFileStreamError_InvalidPacketOffset: {
                 NSLog(@"kAudioFileStreamError_InvalidPacketOffset");
                 break;
             }
-            case kAudioFileStreamError_InvalidFile:
-            {
+            case kAudioFileStreamError_InvalidFile: {
                 NSLog(@"kAudioFileStreamError_InvalidFile");
                 break;
             }
-            case kAudioFileStreamError_ValueUnknown:
-            {
+            case kAudioFileStreamError_ValueUnknown: {
                 NSLog(@"kAudioFileStreamError_ValueUnknown");
                 break;
             }
-            case kAudioFileStreamError_DataUnavailable:
-            {
+            case kAudioFileStreamError_DataUnavailable: {
                 NSLog(@"kAudioFileStreamError_DataUnavailable");
                 break;
             }
-            case kAudioFileStreamError_IllegalOperation:
-            {
+            case kAudioFileStreamError_IllegalOperation: {
                 NSLog(@"kAudioFileStreamError_IllegalOperation");
                 break;
             }
-            case kAudioFileStreamError_UnspecifiedError:
-            {
+            case kAudioFileStreamError_UnspecifiedError: {
                 NSLog(@"kAudioFileStreamError_UnspecifiedError");
                 break;
             }
-            case kAudioFileStreamError_DiscontinuityCantRecover:
-            {
+            case kAudioFileStreamError_DiscontinuityCantRecover: {
                 NSLog(@"kAudioFileStreamError_DiscontinuityCantRecover");
                 break;
             }
@@ -298,8 +277,7 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
     NSLog(@"解码完成...");
 }
 
-- (void)_stopDecoder
-{
+- (void)_stopDecoder {
     if (!self.decoding) return;
     self.decoding = NO;
 }
@@ -307,7 +285,7 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
     AudioConverterRef audioConverter;
     memset(&audioConverter, 0, sizeof(audioConverter));
     AudioStreamBasicDescription outAsbd = [self.class defaultOutputFormat];
-    OSStatus err = AudioConverterNew(&_asdb, &outAsbd, &audioConverter);
+    OSStatus err                        = AudioConverterNew(&_asdb, &outAsbd, &audioConverter);
     if (err != noErr) {
         NSLog(@"%@", ss_OSStatusToString(err));
         return;
@@ -315,42 +293,37 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
     _audioConverter = audioConverter;
 }
 
-- (void)calculateBitRate
-{
+- (void)calculateBitRate {
     if (_packetDuration && _processedPacketsCount > BitRateEstimationMinPackets && _processedPacketsCount <= BitRateEstimationMaxPackets) {
         double averagePacketByteSize = _processedPacketsSizeTotal / _processedPacketsCount;
-        _bitRate = 8.0 * averagePacketByteSize / _packetDuration;
+        _bitRate                     = 8.0 * averagePacketByteSize / _packetDuration;
     }
 }
 
-- (void)calculateDuration
-{
+- (void)calculateDuration {
     if (_fileSize > 0 && _bitRate > 0) {
         _duration = ((_fileSize - _dataOffset) * 8.0) / _bitRate;
     }
 }
 
-- (void)calculatepPacketDuration
-{
+- (void)calculatepPacketDuration {
     if (_asdb.mSampleRate > 0) {
         _packetDuration = _asdb.mFramesPerPacket / _asdb.mSampleRate;
     }
 }
 - (void)handlePropertyChangeForFileStream:(AudioFileStreamID)inAudioFileStream
                      fileStreamPropertyID:(AudioFileStreamPropertyID)inPropertyID
-                                  ioFlags:(UInt32 *)ioFlags
-{
-    @synchronized (self) {
+                                  ioFlags:(UInt32 *)ioFlags {
+    @synchronized(self) {
         if (self.finishing) return;
         OSStatus err = noErr;
         switch (inPropertyID) {
-            case kAudioFileStreamProperty_ReadyToProducePackets:
-            {
-//                [self setupAudioConverterRef];
-                _discontinuous = YES;
+            case kAudioFileStreamProperty_ReadyToProducePackets: {
+                //                [self setupAudioConverterRef];
+                _discontinuous             = YES;
                 self.readyToProducePackets = YES;
-                UInt32 sizeOfUInt32 = sizeof(_maxPacketSize);
-                err = AudioFileStreamGetProperty(_audioFileStreamID, kAudioFileStreamProperty_PacketSizeUpperBound, &sizeOfUInt32, &_maxPacketSize);
+                UInt32 sizeOfUInt32        = sizeof(_maxPacketSize);
+                err                        = AudioFileStreamGetProperty(_audioFileStreamID, kAudioFileStreamProperty_PacketSizeUpperBound, &sizeOfUInt32, &_maxPacketSize);
                 if (err != noErr || _maxPacketSize == 0) {
                     err = AudioFileStreamGetProperty(_audioFileStreamID, kAudioFileStreamProperty_MaximumPacketSize, &sizeOfUInt32, &_maxPacketSize);
                 }
@@ -361,8 +334,7 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
                 });
                 break;
             }
-            case kAudioFileStreamProperty_BitRate:
-            {
+            case kAudioFileStreamProperty_BitRate: {
                 UInt32 size = sizeof(UInt32);
                 if ((err = AudioFileStreamGetProperty(_audioFileStreamID, kAudioFileStreamProperty_BitRate, &size, &_bitRate)) != noErr) {
 
@@ -371,8 +343,7 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
                 [self calculateDuration];
                 break;
             }
-            case kAudioFileStreamProperty_DataOffset:
-            {
+            case kAudioFileStreamProperty_DataOffset: {
                 UInt32 offsetSize = sizeof(SInt64);
                 if ((err = AudioFileStreamGetProperty(_audioFileStreamID, kAudioFileStreamProperty_DataOffset, &offsetSize, &_dataOffset)) != noErr) {
 
@@ -381,8 +352,7 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
                 [self calculateDuration];
                 break;
             }
-            case kAudioFileStreamProperty_AudioDataByteCount:
-            {
+            case kAudioFileStreamProperty_AudioDataByteCount: {
                 UInt32 byteCountSize = sizeof(UInt64);
                 if ((err = AudioFileStreamGetProperty(_audioFileStreamID, kAudioFileStreamProperty_AudioDataByteCount, &byteCountSize, &_audioDataByteCount)) != noErr) {
 
@@ -390,8 +360,7 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
                 }
                 break;
             }
-            case kAudioFileStreamProperty_DataFormat:
-            {
+            case kAudioFileStreamProperty_DataFormat: {
                 UInt32 formatSize = sizeof(_asdb);
                 if ((err = AudioFileStreamGetProperty(_audioFileStreamID, kAudioFileStreamProperty_DataFormat, &formatSize, &_asdb)) != noErr) {
 
@@ -416,8 +385,7 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
                 [self calculatepPacketDuration];
                 break;
             }
-            case kAudioFileStreamProperty_FormatList:
-            {
+            case kAudioFileStreamProperty_FormatList: {
                 Boolean outWriteable;
                 UInt32 formatListSize;
                 if ((err = AudioFileStreamGetPropertyInfo(_audioFileStreamID, kAudioFileStreamProperty_FormatList, &formatListSize, &outWriteable) != noErr)) {
@@ -440,7 +408,7 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
                 }
 
                 UInt32 supportedFormatCount = supportedFormatsSize / sizeof(OSType);
-                OSType *supportedFormats = (OSType *)malloc(supportedFormatsSize);
+                OSType *supportedFormats    = (OSType *)malloc(supportedFormatsSize);
                 if ((err = AudioFormatGetProperty(kAudioFormatProperty_DecodeFormatIDs, 0, NULL, &supportedFormatsSize, supportedFormats)) != noErr) {
                     free(formatList);
                     free(supportedFormats);
@@ -486,15 +454,13 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
                 break;
         }
     }
-
 }
 
 - (void)handleAudioPackets:(const void *)inInputData
                numberBytes:(UInt32)inNumberBytes
              numberPackets:(UInt32)inNumberPackets
-        packetDescriptions:(AudioStreamPacketDescription *)inPacketDescriptions
-{
-    @synchronized (self) {
+        packetDescriptions:(AudioStreamPacketDescription *)inPacketDescriptions {
+    @synchronized(self) {
         if (_discontinuous) {
             _discontinuous = NO;
         }
@@ -507,13 +473,13 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
         BOOL deletePackDesc = NO;
         if (inPacketDescriptions == NULL) {
             //如果packetDescriptioins不存在，就按照CBR处理，平均每一帧的数据后生成packetDescriptioins
-            deletePackDesc = YES;
-            UInt32 packetSize = inNumberBytes / inNumberPackets;
+            deletePackDesc       = YES;
+            UInt32 packetSize    = inNumberBytes / inNumberPackets;
             inPacketDescriptions = (AudioStreamPacketDescription *)malloc(sizeof(AudioStreamPacketDescription) * inNumberPackets);
 
             for (int i = 0; i < inNumberPackets; i++) {
-                UInt32 packetOffset = packetSize * i;
-                inPacketDescriptions[i].mStartOffset = packetOffset;
+                UInt32 packetOffset                             = packetSize * i;
+                inPacketDescriptions[i].mStartOffset            = packetOffset;
                 inPacketDescriptions[i].mVariableFramesInPacket = 0;
                 if (i == inNumberPackets - 1) {
                     inPacketDescriptions[i].mDataByteSize = inNumberBytes - packetOffset;
@@ -526,7 +492,7 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
         for (int i = 0; i < inNumberPackets; ++i) {
 
             AudioStreamPacketDescription aspd = inPacketDescriptions[i];
-            SInt64 packetOffset = aspd.mStartOffset;
+            SInt64 packetOffset               = aspd.mStartOffset;
 
             /*
             //设置输入
@@ -567,14 +533,11 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
              */
             _decodeCount += aspd.mDataByteSize;
             [self.lpcm writeBytes:(inInputData + packetOffset) length:aspd.mDataByteSize];
-            if (_processedPacketsCount < BitRateEstimationMaxPackets)
-            {
+            if (_processedPacketsCount < BitRateEstimationMaxPackets) {
                 _processedPacketsSizeTotal += aspd.mDataByteSize;
                 _processedPacketsCount += 1;
                 [self calculateBitRate];
                 [self calculateDuration];
-
-
             }
         }
         if (_decodeCount >= _bufferByteCount) {
@@ -599,73 +562,65 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
 + (void)printAudioStreamBasicDescription:(AudioStreamBasicDescription)asbd {
     char formatID[5];
     UInt32 mFormatID = CFSwapInt32HostToBig(asbd.mFormatID);
-    bcopy (&mFormatID, formatID, 4);
+    bcopy(&mFormatID, formatID, 4);
     formatID[4] = '\0';
-    printf("Sample Rate:         %10.0f\n",  asbd.mSampleRate);
-    printf("Format ID:           %10s\n",    formatID);
-    printf("Format Flags:        %10X\n",    (unsigned int)asbd.mFormatFlags);
-    printf("Bytes per Packet:    %10d\n",    (unsigned int)asbd.mBytesPerPacket);
-    printf("Frames per Packet:   %10d\n",    (unsigned int)asbd.mFramesPerPacket);
-    printf("Bytes per Frame:     %10d\n",    (unsigned int)asbd.mBytesPerFrame);
-    printf("Channels per Frame:  %10d\n",    (unsigned int)asbd.mChannelsPerFrame);
-    printf("Bits per Channel:    %10d\n",    (unsigned int)asbd.mBitsPerChannel);
+    printf("Sample Rate:         %10.0f\n", asbd.mSampleRate);
+    printf("Format ID:           %10s\n", formatID);
+    printf("Format Flags:        %10X\n", (unsigned int)asbd.mFormatFlags);
+    printf("Bytes per Packet:    %10d\n", (unsigned int)asbd.mBytesPerPacket);
+    printf("Frames per Packet:   %10d\n", (unsigned int)asbd.mFramesPerPacket);
+    printf("Bytes per Frame:     %10d\n", (unsigned int)asbd.mBytesPerFrame);
+    printf("Channels per Frame:  %10d\n", (unsigned int)asbd.mChannelsPerFrame);
+    printf("Bits per Channel:    %10d\n", (unsigned int)asbd.mBitsPerChannel);
     printf("\n");
 }
-+ (AudioStreamBasicDescription)defaultOutputFormat
-{
++ (AudioStreamBasicDescription)defaultOutputFormat {
     static AudioStreamBasicDescription defaultOutputFormat;
 
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        defaultOutputFormat.mFormatID = kAudioFormatLinearPCM;
+        defaultOutputFormat.mFormatID   = kAudioFormatLinearPCM;
         defaultOutputFormat.mSampleRate = 44100;
 
-        defaultOutputFormat.mBitsPerChannel = 16;
+        defaultOutputFormat.mBitsPerChannel   = 16;
         defaultOutputFormat.mChannelsPerFrame = 2;
-        defaultOutputFormat.mBytesPerFrame = defaultOutputFormat.mChannelsPerFrame * (defaultOutputFormat.mBitsPerChannel / 8);
+        defaultOutputFormat.mBytesPerFrame    = defaultOutputFormat.mChannelsPerFrame * (defaultOutputFormat.mBitsPerChannel / 8);
 
         defaultOutputFormat.mFramesPerPacket = 1;
-        defaultOutputFormat.mBytesPerPacket = defaultOutputFormat.mFramesPerPacket * defaultOutputFormat.mBytesPerFrame;
+        defaultOutputFormat.mBytesPerPacket  = defaultOutputFormat.mFramesPerPacket * defaultOutputFormat.mBytesPerFrame;
 
         defaultOutputFormat.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked;
     });
 
     return defaultOutputFormat;
 }
-- (SInt64)seekToTime:(NSTimeInterval *)time
-{
+- (SInt64)seekToTime:(NSTimeInterval *)time {
     SInt64 approximateSeekOffset = _dataOffset + (*time / _duration) * _audioDataByteCount;
-    SInt64 seekToPacket = floor(*time / _packetDuration);
+    SInt64 seekToPacket          = floor(*time / _packetDuration);
     SInt64 seekByteOffset;
     UInt32 ioFlags = 0;
     SInt64 outDataByteOffset;
     OSStatus status = AudioFileStreamSeek(_audioFileStreamID, seekToPacket, &outDataByteOffset, &ioFlags);
-    if (status == noErr && !(ioFlags & kAudioFileStreamSeekFlag_OffsetIsEstimated))
-    {
+    if (status == noErr && !(ioFlags & kAudioFileStreamSeekFlag_OffsetIsEstimated)) {
         *time -= ((approximateSeekOffset - _dataOffset) - outDataByteOffset) * 8.0 / _bitRate;
         seekByteOffset = outDataByteOffset + _dataOffset;
-    }
-    else
-    {
+    } else {
         _discontinuous = YES;
         seekByteOffset = approximateSeekOffset;
     }
     return seekByteOffset;
 }
-- (NSData *)fetchMagicCookie
-{
+- (NSData *)fetchMagicCookie {
     UInt32 cookieSize;
     Boolean writable;
     OSStatus status = AudioFileStreamGetPropertyInfo(_audioFileStreamID, kAudioFileStreamProperty_MagicCookieData, &cookieSize, &writable);
-    if (status != noErr)
-    {
+    if (status != noErr) {
         return nil;
     }
 
     void *cookieData = malloc(cookieSize);
-    status = AudioFileStreamGetProperty(_audioFileStreamID, kAudioFileStreamProperty_MagicCookieData, &cookieSize, cookieData);
-    if (status != noErr)
-    {
+    status           = AudioFileStreamGetProperty(_audioFileStreamID, kAudioFileStreamProperty_MagicCookieData, &cookieSize, cookieData);
+    if (status != noErr) {
         return nil;
     }
 
@@ -676,22 +631,20 @@ static OSStatus __ss_decoder_data_proc__(AudioConverterRef inAudioConverter,
 }
 //------------------------------------------------------------------------------
 
-+ (BOOL)isFloatFormat:(AudioStreamBasicDescription)asbd
-{
++ (BOOL)isFloatFormat:(AudioStreamBasicDescription)asbd {
     return asbd.mFormatFlags & kAudioFormatFlagIsFloat;
 }
 
 //------------------------------------------------------------------------------
 
-+ (BOOL)isInterleaved:(AudioStreamBasicDescription)asbd
-{
++ (BOOL)isInterleaved:(AudioStreamBasicDescription)asbd {
     return !(asbd.mFormatFlags & kAudioFormatFlagIsNonInterleaved);
 }
 
 //------------------------------------------------------------------------------
 
-+ (BOOL)isLinearPCM:(AudioStreamBasicDescription)asbd
-{
++ (BOOL)isLinearPCM:(AudioStreamBasicDescription)asbd {
     return asbd.mFormatID == kAudioFormatLinearPCM;
 }
 @end
+

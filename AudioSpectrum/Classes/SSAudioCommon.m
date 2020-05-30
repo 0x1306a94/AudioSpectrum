@@ -8,21 +8,18 @@
 
 #import "SSAudioCommon.h"
 
-
-
 NSArray *ss_get_fallbackTypeIDs(NSString *mimeType, NSString *fileExtension) {
     if (mimeType.length == 0 || fileExtension.length == 0) return nil;
 
     NSMutableArray *fallbackTypeIDs = [NSMutableArray array];
     NSMutableSet *fallbackTypeIDSet = [NSMutableSet set];
-    
+
     struct {
         CFStringRef specifier;
         AudioFilePropertyID propertyID;
     } properties[] = {
-        { (__bridge CFStringRef)mimeType, kAudioFileGlobalInfo_TypesForMIMEType },
-        { (__bridge CFStringRef)fileExtension, kAudioFileGlobalInfo_TypesForExtension }
-    };
+        {(__bridge CFStringRef)mimeType, kAudioFileGlobalInfo_TypesForMIMEType},
+        {(__bridge CFStringRef)fileExtension, kAudioFileGlobalInfo_TypesForExtension}};
 
     const size_t numberOfProperties = sizeof(properties) / sizeof(properties[0]);
 
@@ -42,7 +39,7 @@ NSArray *ss_get_fallbackTypeIDs(NSString *mimeType, NSString *fileExtension) {
             continue;
         }
 
-        size_t count = outSize / sizeof(AudioFileTypeID);
+        size_t count            = outSize / sizeof(AudioFileTypeID);
         AudioFileTypeID *buffer = (AudioFileTypeID *)malloc(outSize);
         if (buffer == NULL) {
             continue;
@@ -83,25 +80,23 @@ void ss_call_main_thread(dispatch_block_t block) {
     }
 }
 
-
-
-NSString *ss_OSStatusToString(OSStatus status)
-{
+NSString *ss_OSStatusToString(OSStatus status) {
     size_t len = sizeof(UInt32);
-    long addr = (unsigned long)&status;
+    long addr  = (unsigned long)&status;
     char cstring[5];
 
     len = (status >> 24) == 0 ? len - 1 : len;
     len = (status >> 16) == 0 ? len - 1 : len;
-    len = (status >>  8) == 0 ? len - 1 : len;
-    len = (status >>  0) == 0 ? len - 1 : len;
+    len = (status >> 8) == 0 ? len - 1 : len;
+    len = (status >> 0) == 0 ? len - 1 : len;
 
     addr += (4 - len);
 
-    status = EndianU32_NtoB(status);        // strings are big endian
+    status = EndianU32_NtoB(status);  // strings are big endian
 
     strncpy(cstring, (char *)addr, len);
     cstring[len] = 0;
 
     return [NSString stringWithCString:(char *)cstring encoding:NSMacOSRomanStringEncoding];
 }
+

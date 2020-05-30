@@ -50,7 +50,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)isLinearPCM:(AudioStreamBasicDescription)asbd;
 @end
 
-
 @protocol SSAudioDecoderDelegate <NSObject>
 
 - (void)ssAudioDecoder:(SSAudioDecoder *)decoder didParseAudioStreamBasicDescription:(AudioStreamBasicDescription)asdb;
@@ -59,3 +58,4 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+

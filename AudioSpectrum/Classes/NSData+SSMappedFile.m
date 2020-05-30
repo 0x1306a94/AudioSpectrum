@@ -8,11 +8,10 @@
 
 #import "NSData+SSMappedFile.h"
 
-#import <sys/types.h>
 #import <sys/mman.h>
+#import <sys/types.h>
 
-static NSMutableDictionary *__ss_get_size_map__()
-{
+static NSMutableDictionary *__ss_get_size_map__() {
     static NSMutableDictionary *map = nil;
 
     static dispatch_once_t onceToken;
@@ -23,9 +22,8 @@ static NSMutableDictionary *__ss_get_size_map__()
     return map;
 }
 
-static void __ss_mmap_deallocate__(void *ptr, void *info)
-{
-    NSNumber *key = [NSNumber numberWithUnsignedLongLong:(uintptr_t)ptr];
+static void __ss_mmap_deallocate__(void *ptr, void *info) {
+    NSNumber *key      = [NSNumber numberWithUnsignedLongLong:(uintptr_t)ptr];
     NSNumber *fileSize = nil;
 
     NSMutableDictionary *sizeMap = __ss_get_size_map__();
@@ -38,8 +36,7 @@ static void __ss_mmap_deallocate__(void *ptr, void *info)
     munmap(ptr, size);
 }
 
-static CFAllocatorRef __ss_get_mmap_deallocator__()
-{
+static CFAllocatorRef __ss_get_mmap_deallocator__() {
     static CFAllocatorRef deallocator = NULL;
 
     static dispatch_once_t onceToken;
@@ -55,33 +52,27 @@ static CFAllocatorRef __ss_get_mmap_deallocator__()
 }
 
 @implementation NSData (SSMappedFile)
-+ (instancetype)ss_dataWithMappedContentsOfFile:(NSString *)path
-{
++ (instancetype)ss_dataWithMappedContentsOfFile:(NSString *)path {
     return [[self class] _ss_dataWithMappedContentsOfFile:path modifiable:NO];
 }
 
-+ (instancetype)ss_dataWithMappedContentsOfURL:(NSURL *)url
-{
++ (instancetype)ss_dataWithMappedContentsOfURL:(NSURL *)url {
     return [[self class] ss_dataWithMappedContentsOfFile:[url path]];
 }
 
-+ (instancetype)ss_modifiableDataWithMappedContentsOfFile:(NSString *)path
-{
++ (instancetype)ss_modifiableDataWithMappedContentsOfFile:(NSString *)path {
     return [[self class] _ss_dataWithMappedContentsOfFile:path modifiable:YES];
 }
 
-+ (instancetype)ss_modifiableDataWithMappedContentsOfURL:(NSURL *)url
-{
++ (instancetype)ss_modifiableDataWithMappedContentsOfURL:(NSURL *)url {
     return [[self class] ss_modifiableDataWithMappedContentsOfFile:[url path]];
 }
 
-+ (instancetype)_ss_dataWithMappedContentsOfFile:(NSString *)path modifiable:(BOOL)modifiable
-{
++ (instancetype)_ss_dataWithMappedContentsOfFile:(NSString *)path modifiable:(BOOL)modifiable {
     NSFileHandle *fileHandle = nil;
     if (modifiable) {
         fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:path];
-    }
-    else {
+    } else {
         fileHandle = [NSFileHandle fileHandleForReadingAtPath:path];
     }
     if (fileHandle == nil) {
@@ -117,9 +108,8 @@ static CFAllocatorRef __ss_get_mmap_deallocator__()
     return CFBridgingRelease(CFDataCreateWithBytesNoCopy(kCFAllocatorDefault, (const UInt8 *)address, (CFIndex)size, __ss_get_mmap_deallocator__()));
 }
 
-- (void)ss_synchronizeMappedFile
-{
-    NSNumber *key = [NSNumber numberWithUnsignedLongLong:(uintptr_t)[self bytes]];
+- (void)ss_synchronizeMappedFile {
+    NSNumber *key      = [NSNumber numberWithUnsignedLongLong:(uintptr_t)[self bytes]];
     NSNumber *fileSize = nil;
 
     NSMutableDictionary *sizeMap = __ss_get_size_map__();
@@ -135,3 +125,4 @@ static CFAllocatorRef __ss_get_mmap_deallocator__()
     msync((void *)[self bytes], size, MS_SYNC | MS_INVALIDATE);
 }
 @end
+

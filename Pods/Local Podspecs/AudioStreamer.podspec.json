@@ -1,0 +1,34 @@
+{
+  "name": "AudioStreamer",
+  "version": "1.4.0",
+  "summary": "A Swift 4 framework for streaming remote audio with real-time effects using AVAudioEngine",
+  "homepage": "https://github.com/syedhali/AudioStreamer",
+  "screenshots": "https://res.cloudinary.com/fast-learner/image/upload/v1527455500/blog/22/banner/1d9b0d3b-0998-4ad7-854e-4fb854b9955e.jpg",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Syed Haris Ali": "haris@ausomeapps.com"
+  },
+  "social_media_url": "http://twitter.com/h4ris4li",
+  "platforms": {
+    "ios": "10.0",
+    "osx": "10.12"
+  },
+  "source": {
+    "git": "https://github.com/syedhali/AudioStreamer.git",
+    "tag": "v1.4.0"
+  },
+  "source_files": "AudioStreamer/**/*.{swift}",
+  "osx": {
+    "exclude_files": "AudioStreamer/UI/ProgressSlider.swift"
+  },
+  "swift_versions": "4.2",
+  "frameworks": [
+    "AVFoundation",
+    "AudioToolbox"
+  ],
+  "requires_arc": true,
+  "swift_version": "4.2"
+}

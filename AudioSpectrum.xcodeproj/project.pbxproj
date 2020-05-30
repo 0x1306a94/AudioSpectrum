@@ -3,15 +3,18 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C17D283248228B200B0FABC /* WrappedStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C17D282248228B200B0FABC /* WrappedStream.swift */; };
 		3C5F3BFC224B96D4009F9881 /* RealtimeAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5F3BFB224B96D4009F9881 /* RealtimeAnalyzer.m */; };
 		3C5F3BFF224C6DEE009F9881 /* SpectrumView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5F3BFE224C6DEE009F9881 /* SpectrumView.m */; };
 		3CECB956224CCE6100470BFF /* 02.Ellis - Clear My Head (Radio Edit) [NCS].mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3CECB953224CCE6000470BFF /* 02.Ellis - Clear My Head (Radio Edit) [NCS].mp3 */; };
 		3CECB957224CCE6100470BFF /* 03.Spektrum & Sara Skinner - Keep You.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3CECB954224CCE6100470BFF /* 03.Spektrum & Sara Skinner - Keep You.mp3 */; };
 		3CECB958224CCE6100470BFF /* 01.Halcyon - Runaway (Feat. Valentina Franco) (Heuse Remix).mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3CECB955224CCE6100470BFF /* 01.Halcyon - Runaway (Feat. Valentina Franco) (Heuse Remix).mp3 */; };
+		56487F125B5C5B71A6CDD41C /* Pods_AudioSpectrum.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93342A80B1E82F9EC42C2367 /* Pods_AudioSpectrum.framework */; };
+		5BB263107B8F494523EF7D93 /* Pods_AudioSpectrumTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACA9B7C1E949F90C0B73ED43 /* Pods_AudioSpectrumTests.framework */; };
 		A41DD175224B1AFD00915596 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A41DD174224B1AFD00915596 /* AppDelegate.m */; };
 		A41DD178224B1AFD00915596 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A41DD177224B1AFD00915596 /* ViewController.m */; };
 		A41DD17B224B1AFD00915596 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A41DD179224B1AFD00915596 /* Main.storyboard */; };
@@ -27,6 +30,7 @@
 		A465F29D2254A70700799113 /* SSAudioDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = A465F29C2254A70700799113 /* SSAudioDecoder.m */; };
 		A465F2A02254A84F00799113 /* SSAudioCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = A465F29F2254A84F00799113 /* SSAudioCommon.m */; };
 		A465F2A3225591A100799113 /* SSAudioLPCM.m in Sources */ = {isa = PBXBuildFile; fileRef = A465F2A2225591A100799113 /* SSAudioLPCM.m */; };
+		EAEFFD716C2F9A9641B454F3 /* Pods_AudioSpectrum_AudioSpectrumUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC3909A569C27050073F7E0C /* Pods_AudioSpectrum_AudioSpectrumUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,7 +50,26 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		3C75C48B248224A900729904 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		0EC457ED0BB89FDFE6008C17 /* Pods-AudioSpectrum.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioSpectrum.debug.xcconfig"; path = "Target Support Files/Pods-AudioSpectrum/Pods-AudioSpectrum.debug.xcconfig"; sourceTree = "<group>"; };
+		2A017C71D6B304EA8D57443B /* Pods-AudioSpectrumTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioSpectrumTests.release.xcconfig"; path = "Target Support Files/Pods-AudioSpectrumTests/Pods-AudioSpectrumTests.release.xcconfig"; sourceTree = "<group>"; };
+		2FB3A9A7027168E16FF77B02 /* Pods-AudioSpectrum.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioSpectrum.release.xcconfig"; path = "Target Support Files/Pods-AudioSpectrum/Pods-AudioSpectrum.release.xcconfig"; sourceTree = "<group>"; };
+		38982B124B0BFD95FBBE700E /* Pods-AudioSpectrum-AudioSpectrumUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioSpectrum-AudioSpectrumUITests.release.xcconfig"; path = "Target Support Files/Pods-AudioSpectrum-AudioSpectrumUITests/Pods-AudioSpectrum-AudioSpectrumUITests.release.xcconfig"; sourceTree = "<group>"; };
+		3C17D281248228B200B0FABC /* AudioSpectrum-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioSpectrum-Bridging-Header.h"; sourceTree = "<group>"; };
+		3C17D282248228B200B0FABC /* WrappedStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedStream.swift; sourceTree = "<group>"; };
 		3C5F3BFA224B96D4009F9881 /* RealtimeAnalyzer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RealtimeAnalyzer.h; sourceTree = "<group>"; };
 		3C5F3BFB224B96D4009F9881 /* RealtimeAnalyzer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RealtimeAnalyzer.m; sourceTree = "<group>"; };
 		3C5F3BFD224C6DEE009F9881 /* SpectrumView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpectrumView.h; sourceTree = "<group>"; };
@@ -54,6 +77,8 @@
 		3CECB953224CCE6000470BFF /* 02.Ellis - Clear My Head (Radio Edit) [NCS].mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "02.Ellis - Clear My Head (Radio Edit) [NCS].mp3"; sourceTree = "<group>"; };
 		3CECB954224CCE6100470BFF /* 03.Spektrum & Sara Skinner - Keep You.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "03.Spektrum & Sara Skinner - Keep You.mp3"; sourceTree = "<group>"; };
 		3CECB955224CCE6100470BFF /* 01.Halcyon - Runaway (Feat. Valentina Franco) (Heuse Remix).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "01.Halcyon - Runaway (Feat. Valentina Franco) (Heuse Remix).mp3"; sourceTree = "<group>"; };
+		5E6AAF2BB968E247D36EFD2C /* Pods-AudioSpectrum-AudioSpectrumUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioSpectrum-AudioSpectrumUITests.debug.xcconfig"; path = "Target Support Files/Pods-AudioSpectrum-AudioSpectrumUITests/Pods-AudioSpectrum-AudioSpectrumUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		93342A80B1E82F9EC42C2367 /* Pods_AudioSpectrum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AudioSpectrum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A41DD170224B1AFD00915596 /* AudioSpectrum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioSpectrum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A41DD173224B1AFD00915596 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A41DD174224B1AFD00915596 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -84,6 +109,9 @@
 		A465F29F2254A84F00799113 /* SSAudioCommon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSAudioCommon.m; sourceTree = "<group>"; };
 		A465F2A1225591A100799113 /* SSAudioLPCM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSAudioLPCM.h; sourceTree = "<group>"; };
 		A465F2A2225591A100799113 /* SSAudioLPCM.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSAudioLPCM.m; sourceTree = "<group>"; };
+		ACA9B7C1E949F90C0B73ED43 /* Pods_AudioSpectrumTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AudioSpectrumTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB39A3F099045C2CB61F7D1C /* Pods-AudioSpectrumTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioSpectrumTests.debug.xcconfig"; path = "Target Support Files/Pods-AudioSpectrumTests/Pods-AudioSpectrumTests.debug.xcconfig"; sourceTree = "<group>"; };
+		FC3909A569C27050073F7E0C /* Pods_AudioSpectrum_AudioSpectrumUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AudioSpectrum_AudioSpectrumUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +119,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56487F125B5C5B71A6CDD41C /* Pods_AudioSpectrum.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BB263107B8F494523EF7D93 /* Pods_AudioSpectrumTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,12 +135,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAEFFD716C2F9A9641B454F3 /* Pods_AudioSpectrum_AudioSpectrumUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C75C488248224A900729904 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				93342A80B1E82F9EC42C2367 /* Pods_AudioSpectrum.framework */,
+				FC3909A569C27050073F7E0C /* Pods_AudioSpectrum_AudioSpectrumUITests.framework */,
+				ACA9B7C1E949F90C0B73ED43 /* Pods_AudioSpectrumTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9A2ABDA5D9F7C6CF9C7D2661 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0EC457ED0BB89FDFE6008C17 /* Pods-AudioSpectrum.debug.xcconfig */,
+				2FB3A9A7027168E16FF77B02 /* Pods-AudioSpectrum.release.xcconfig */,
+				5E6AAF2BB968E247D36EFD2C /* Pods-AudioSpectrum-AudioSpectrumUITests.debug.xcconfig */,
+				38982B124B0BFD95FBBE700E /* Pods-AudioSpectrum-AudioSpectrumUITests.release.xcconfig */,
+				EB39A3F099045C2CB61F7D1C /* Pods-AudioSpectrumTests.debug.xcconfig */,
+				2A017C71D6B304EA8D57443B /* Pods-AudioSpectrumTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		A41DD167224B1AFD00915596 = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +172,8 @@
 				A41DD18B224B1B0100915596 /* AudioSpectrumTests */,
 				A41DD196224B1B0100915596 /* AudioSpectrumUITests */,
 				A41DD171224B1AFD00915596 /* Products */,
+				3C75C488248224A900729904 /* Frameworks */,
+				9A2ABDA5D9F7C6CF9C7D2661 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -142,6 +198,7 @@
 				A41DD174224B1AFD00915596 /* AppDelegate.m */,
 				A41DD176224B1AFD00915596 /* ViewController.h */,
 				A41DD177224B1AFD00915596 /* ViewController.m */,
+				3C17D282248228B200B0FABC /* WrappedStream.swift */,
 				A41DD179224B1AFD00915596 /* Main.storyboard */,
 				A465F1FD2251BBF100799113 /* TrackCell.h */,
 				A465F1FE2251BBF100799113 /* TrackCell.m */,
@@ -150,6 +207,7 @@
 				A41DD17E224B1B0000915596 /* LaunchScreen.storyboard */,
 				A41DD181224B1B0000915596 /* Info.plist */,
 				A41DD182224B1B0000915596 /* main.m */,
+				3C17D281248228B200B0FABC /* AudioSpectrum-Bridging-Header.h */,
 			);
 			path = AudioSpectrum;
 			sourceTree = "<group>";
@@ -201,9 +259,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A41DD19C224B1B0100915596 /* Build configuration list for PBXNativeTarget "AudioSpectrum" */;
 			buildPhases = (
+				A5C82DB5D81CFB64B3E3461B /* [CP] Check Pods Manifest.lock */,
 				A41DD16C224B1AFD00915596 /* Sources */,
 				A41DD16D224B1AFD00915596 /* Frameworks */,
 				A41DD16E224B1AFD00915596 /* Resources */,
+				3C75C48B248224A900729904 /* Embed Frameworks */,
+				A7978901ADAD7478C71531B0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -218,6 +279,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A41DD19F224B1B0100915596 /* Build configuration list for PBXNativeTarget "AudioSpectrumTests" */;
 			buildPhases = (
+				82D3EC1C7AF88AD5013DF6CB /* [CP] Check Pods Manifest.lock */,
 				A41DD184224B1B0100915596 /* Sources */,
 				A41DD185224B1B0100915596 /* Frameworks */,
 				A41DD186224B1B0100915596 /* Resources */,
@@ -236,9 +298,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A41DD1A2224B1B0100915596 /* Build configuration list for PBXNativeTarget "AudioSpectrumUITests" */;
 			buildPhases = (
+				667189D7BFD4D58ED9D92461 /* [CP] Check Pods Manifest.lock */,
 				A41DD18F224B1B0100915596 /* Sources */,
 				A41DD190224B1B0100915596 /* Frameworks */,
 				A41DD191224B1B0100915596 /* Resources */,
+				49CAD343BEFB46FBF7FC3246 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -261,6 +325,7 @@
 				TargetAttributes = {
 					A41DD16F224B1AFD00915596 = {
 						CreatedOnToolsVersion = 10.2;
+						LastSwiftMigration = 1130;
 					};
 					A41DD187224B1B0100915596 = {
 						CreatedOnToolsVersion = 10.2;
@@ -323,6 +388,109 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		49CAD343BEFB46FBF7FC3246 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AudioSpectrum-AudioSpectrumUITests/Pods-AudioSpectrum-AudioSpectrumUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AudioSpectrum-AudioSpectrumUITests/Pods-AudioSpectrum-AudioSpectrumUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AudioSpectrum-AudioSpectrumUITests/Pods-AudioSpectrum-AudioSpectrumUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		667189D7BFD4D58ED9D92461 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AudioSpectrum-AudioSpectrumUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		82D3EC1C7AF88AD5013DF6CB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AudioSpectrumTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A5C82DB5D81CFB64B3E3461B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AudioSpectrum-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A7978901ADAD7478C71531B0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AudioSpectrum/Pods-AudioSpectrum-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AudioSpectrum/Pods-AudioSpectrum-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AudioSpectrum/Pods-AudioSpectrum-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A41DD16C224B1AFD00915596 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -337,6 +505,7 @@
 				3C5F3BFC224B96D4009F9881 /* RealtimeAnalyzer.m in Sources */,
 				A465F2A3225591A100799113 /* SSAudioLPCM.m in Sources */,
 				A41DD175224B1AFD00915596 /* AppDelegate.m in Sources */,
+				3C17D283248228B200B0FABC /* WrappedStream.swift in Sources */,
 				A465F22122547B0B00799113 /* NSData+SSMappedFile.m in Sources */,
 				A465F2002251BBF100799113 /* TrackCell.m in Sources */,
 			);
@@ -507,8 +676,10 @@
 		};
 		A41DD19D224B1B0100915596 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0EC457ED0BB89FDFE6008C17 /* Pods-AudioSpectrum.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 87Q8YX4GE8;
 				INFOPLIST_FILE = AudioSpectrum/Info.plist;
@@ -520,14 +691,19 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.taihe.test.AudioSpectrum;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "通用测试DEV";
+				SWIFT_OBJC_BRIDGING_HEADER = "AudioSpectrum/AudioSpectrum-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		A41DD19E224B1B0100915596 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2FB3A9A7027168E16FF77B02 /* Pods-AudioSpectrum.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 87Q8YX4GE8;
@@ -540,13 +716,17 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.taihe.test.AudioSpectrum;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "通用测试ADHOC";
+				SWIFT_OBJC_BRIDGING_HEADER = "AudioSpectrum/AudioSpectrum-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
 		A41DD1A0224B1B0100915596 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EB39A3F099045C2CB61F7D1C /* Pods-AudioSpectrumTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = AudioSpectrumTests/Info.plist;
@@ -564,7 +744,9 @@
 		};
 		A41DD1A1224B1B0100915596 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A017C71D6B304EA8D57443B /* Pods-AudioSpectrumTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = AudioSpectrumTests/Info.plist;
@@ -582,7 +764,9 @@
 		};
 		A41DD1A3224B1B0100915596 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5E6AAF2BB968E247D36EFD2C /* Pods-AudioSpectrum-AudioSpectrumUITests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = AudioSpectrumUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -599,7 +783,9 @@
 		};
 		A41DD1A4224B1B0100915596 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38982B124B0BFD95FBBE700E /* Pods-AudioSpectrum-AudioSpectrumUITests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = AudioSpectrumUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

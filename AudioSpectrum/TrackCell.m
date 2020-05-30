@@ -58,12 +58,10 @@
 
 #pragma mark - add subview
 - (void)addSubViews {
-
 }
 
 #pragma mark - layout
 - (void)addSubViewConstraints {
-
 }
 
 #pragma mark - private method
@@ -72,7 +70,7 @@
 }
 #pragma mark - public method
 - (void)configureWithTrackName:(NSString *)trackName playing:(BOOL)playing {
-    self.trackName = trackName;
+    self.trackName           = trackName;
     self.trackNameLabel.text = trackName;
     self.playButton.selected = playing;
 }
@@ -82,3 +80,4 @@
 #pragma mark - getters and setters
 
 @end
+

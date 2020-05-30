@@ -27,12 +27,11 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol TrackCellDelegate;
 
 @interface TrackCell : UITableViewCell
-@property (nonatomic, strong) void(^didClickHandler)(void);
+@property (nonatomic, strong) void (^didClickHandler)(void);
 - (void)configureWithTrackName:(NSString *)trackName playing:(BOOL)playing;
 
 - (void)updateState:(BOOL)playing;
 @end
 
-
-
 NS_ASSUME_NONNULL_END
+

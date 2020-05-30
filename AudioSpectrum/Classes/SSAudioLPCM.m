@@ -17,35 +17,35 @@
 #import <AvailabilityInternal.h>
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
-#define __Lock(v) \
-do { \
-    if (v != NULL) { \
-        os_unfair_lock_lock(v); \
-    } \
-} while (0)
+#define __Lock(v)                   \
+    do {                            \
+        if (v != NULL) {            \
+            os_unfair_lock_lock(v); \
+        }                           \
+    } while (0)
 
-#define __UnLock(v) \
-do { \
-    if (v != NULL) { \
-        os_unfair_lock_unlock(v); \
-    } \
-} while (0)
+#define __UnLock(v)                   \
+    do {                              \
+        if (v != NULL) {              \
+            os_unfair_lock_unlock(v); \
+        }                             \
+    } while (0)
 
 #else
 
-#define __Lock(v) \
-do { \
-    if (v != NULL) { \
-        OSSpinLockLock(v); \
-    } \
-} while (0)
+#define __Lock(v)              \
+    do {                       \
+        if (v != NULL) {       \
+            OSSpinLockLock(v); \
+        }                      \
+    } while (0)
 
-#define __UnLock(v) \
-do { \
-    if (v != NULL) { \
-        OSSpinLockUnlock(v); \
-    } \
-} while (0)
+#define __UnLock(v)              \
+    do {                         \
+        if (v != NULL) {         \
+            OSSpinLockUnlock(v); \
+        }                        \
+    } while (0)
 
 #endif
 
@@ -56,9 +56,8 @@ typedef struct data_segment {
     struct data_segment *next;
 } data_segment;
 
-@implementation SSAudioLPCM
-{
-@private
+@implementation SSAudioLPCM {
+  @private
     data_segment *_segments;
     BOOL _end;
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
@@ -70,8 +69,7 @@ typedef struct data_segment {
 
 @synthesize end = _end;
 
-- (id)init
-{
+- (id)init {
     self = [super init];
     if (self) {
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
@@ -83,8 +81,7 @@ typedef struct data_segment {
     return self;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     while (_segments != NULL) {
         data_segment *next = _segments->next;
         free(_segments->bytes);
@@ -93,8 +90,7 @@ typedef struct data_segment {
     }
 }
 
-- (void)setEnd:(BOOL)end
-{
+- (void)setEnd:(BOOL)end {
     __Lock(&_lock);
     if (end && !_end) {
         _end = YES;
@@ -105,8 +101,7 @@ typedef struct data_segment {
     OSSpinLockUnlock(&_lock);
 #endif
 }
-- (void)rest
-{
+- (void)rest {
     while (_segments != NULL) {
         data_segment *next = _segments->next;
         free(_segments->bytes);
@@ -114,9 +109,8 @@ typedef struct data_segment {
         _segments = next;
     }
 }
--(BOOL)readBytes:(void **)bytes needReadLength:(NSUInteger)needReadLength realLength:(NSUInteger *)realLength
-{
-    *bytes = NULL;
+- (BOOL)readBytes:(void **)bytes needReadLength:(NSUInteger)needReadLength realLength:(NSUInteger *)realLength {
+    *bytes      = NULL;
     *realLength = 0;
 
     __Lock(&_lock);
@@ -128,7 +122,7 @@ typedef struct data_segment {
 
     if (_segments != NULL) {
         NSUInteger readLength = 0;
-        *bytes = calloc(1, needReadLength);
+        *bytes                = calloc(1, needReadLength);
         while (readLength < needReadLength && _segments != NULL) {
             NSUInteger len = MIN(needReadLength - readLength, _segments->length - _segments->pos);
             memcpy(*bytes + readLength, _segments->bytes + _segments->pos, len);
@@ -147,8 +141,7 @@ typedef struct data_segment {
     return YES;
 }
 
-- (void)writeBytes:(const void *)bytes length:(NSUInteger)length
-{
+- (void)writeBytes:(const void *)bytes length:(NSUInteger)length {
     __Lock(&_lock);
 
     if (_end) {
@@ -162,22 +155,20 @@ typedef struct data_segment {
     }
 
     data_segment *segment = (data_segment *)malloc(sizeof(data_segment));
-    segment->bytes = calloc(1, length);
-    segment->length = length;
-    segment->pos = 0;
-    segment->next = NULL;
+    segment->bytes        = calloc(1, length);
+    segment->length       = length;
+    segment->pos          = 0;
+    segment->next         = NULL;
     memcpy(segment->bytes, bytes, length);
 
     data_segment **link = &_segments;
     while (*link != NULL) {
         data_segment *current = *link;
-        link = &current->next;
+        link                  = &current->next;
     }
 
     *link = segment;
     __UnLock(&_lock);
 }
 @end
-
-
 

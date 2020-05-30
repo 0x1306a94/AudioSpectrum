@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readonly, getter=isReady) BOOL ready;
 @property (nonatomic, assign, readonly, getter=isFinished) BOOL finished;
 
-
 @end
 
 NS_ASSUME_NONNULL_END
+
