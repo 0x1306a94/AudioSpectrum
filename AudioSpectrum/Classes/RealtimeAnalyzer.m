@@ -46,7 +46,7 @@
 
 - (void)comminit {
 
-    self.frequencyBands = 80;
+    self.frequencyBands = 160;
     self.startFrequency = 100.0;
     self.endFrequency   = 18000.0;
     self.spectrumSmooth = 0.5;
@@ -69,7 +69,7 @@
         //1：根据起止频谱、频带数量确定增长的倍数：2^n
         float n          = log2f(self.endFrequency / self.startFrequency) / (self.frequencyBands * 1.0);
         BandsInfo *first = [BandsInfo createWith:self.startFrequency upperFrequency:0];
-        for (int i = 1; i <= 80; i++) {
+        for (int i = 1; i <= self.frequencyBands; i++) {
             float highFrequency  = first.lowerFrequency * powf(2, n);
             float upperFrequency = i == self.frequencyBands ? self.endFrequency : highFrequency;
             first.upperFrequency = upperFrequency;

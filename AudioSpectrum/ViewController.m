@@ -114,7 +114,7 @@
 - (void)setupPlayer {
 
     self.analyzer = [[RealtimeAnalyzer alloc] initWithFFTSize:self.fftSize];
-
+#warning 播放本地音频
     //    self.engine = [[AVAudioEngine alloc] init];
     //    self.player = [[AVAudioPlayerNode alloc] init];
     //    [self.engine attachNode:self.player];
@@ -140,9 +140,11 @@
     //            [self.spectrumView updateSpectra:spectra];
     //        });
     //    }];
+    
+#warning 播放在线音频
     NSURL *url = [NSURL URLWithString:@"https://raw.githubusercontent.com/0x1306a94/AudioSpectrum/master/AudioSpectrum/02.Ellis%20-%20Clear%20My%20Head%20(Radio%20Edit)%20%5BNCS%5D.mp3"];
     /* clang-format off */
-    self.stream = [[WrappedStream alloc] initWithUrl:url callBack:^(AVAudioPCMBuffer * _Nonnull buffer, AVAudioTime * _Nonnull when) {
+    self.stream = [[WrappedStream alloc] initWithUrl:url fftSize:self.fftSize callBack:^(AVAudioPCMBuffer * _Nonnull buffer, AVAudioTime * _Nonnull when) {
         NSArray<NSArray<NSNumber *> *> *spectra = [self.analyzer analyse:buffer];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.spectrumView updateSpectra:spectra];
@@ -152,8 +154,11 @@
 }
 
 - (void)playWithAudioFileModel:(AudioFileModel *)audioFileModel {
+#warning 播放在线音频
     [self.stream play];
     return;
+    
+#warning 播放本地音频
     NSURL *url = audioFileModel.url;
     if (!url) return;
     NSError *error    = nil;

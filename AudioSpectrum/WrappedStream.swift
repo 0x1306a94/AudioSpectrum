@@ -15,11 +15,11 @@ public class WrappedStream: NSObject {
     let stream: Streamer = Streamer()
     let url: URL
     @objc
-    public init(url: URL, callBack: @escaping AVAudioNodeTapBlock) {
+    public init(url: URL, fftSize: UInt32, callBack: @escaping AVAudioNodeTapBlock) {
         self.url = url
         stream.url = url
         stream.engine.mainMixerNode.removeTap(onBus: 0)
-        stream.engine.mainMixerNode.installTap(onBus: 0, bufferSize: 1024, format: nil, block: callBack)
+        stream.engine.mainMixerNode.installTap(onBus: 0, bufferSize: fftSize, format: nil, block: callBack)
     }
     
     @objc
